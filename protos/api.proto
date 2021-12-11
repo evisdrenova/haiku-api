@@ -7,6 +7,8 @@ message InitReply { string ID = 1; }
 message DeployRequest {
   string ImageName = 1;
   string Tag = 2;
+  string Environment = 3;
+  string ProjectName = 4;
 }
 message DeployReply {
   string ID = 1;
@@ -27,6 +29,7 @@ message SetEnvRequest {
   string Value = 2;
   string ProjectName = 3;
   string ServiceName = 4;
+  string Environment = 5;
 }
 message SetEnvReply { bool Success = 2; }
 
