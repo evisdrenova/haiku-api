@@ -1,0 +1,50 @@
+syntax = "proto3";
+option go_package = "github.com/mhelmich/haiku-api/pkg/api/pb;pb";
+
+message InitRequest { string ProjectName = 1; }
+message InitReply { string ID = 1; }
+
+message DeployRequest {
+  string ImageName = 1;
+  string Tag = 2;
+}
+message DeployReply {
+  string ID = 1;
+  string URL = 2;
+}
+
+message ListEnvRequest {}
+message ListEnvReply {
+  message KeyValue {
+    string Key = 1;
+    string Value = 2;
+  }
+  repeated KeyValue List = 1;
+}
+
+message SetEnvRequest {
+  string Key = 1;
+  string Value = 2;
+  string ProjectName = 3;
+  string ServiceName = 4;
+}
+message SetEnvReply { bool Success = 2; }
+
+message RemoveEnvRequest { string Key = 1; }
+message RemoveEnvReply { bool Success = 1; }
+
+message DockerLoginRequest {
+  string URL = 1;
+  string Username = 2;
+  string Password = 3;
+}
+message DockerLoginReply { string ID = 1; }
+
+service CliService {
+  rpc Init(InitRequest) returns (InitReply) {}
+  rpc Deploy(DeployRequest) returns (DeployReply) {}
+  rpc ListEnv(ListEnvRequest) returns (ListEnvReply) {}
+  rpc SetEnv(SetEnvRequest) returns (SetEnvReply) {}
+  rpc RemoveEnv(RemoveEnvRequest) returns (RemoveEnvReply) {}
+  rpc DockerLogin(DockerLoginRequest) returns (DockerLoginReply) {}
+}

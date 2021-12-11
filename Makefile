@@ -1,0 +1,37 @@
+GO=go
+GIT=git
+PROTOC=protoc
+DOCKER=docker
+
+GIT_COMMIT ?= $(shell git rev-parse --short HEAD || echo unknown)
+
+default: all
+
+all: build test
+.PHONY: all
+
+vendor:
+	$(GO) mod tidy && $(GO) mod vendor
+.PHONY: vendor
+
+build:
+	cd cmd/healthcare && $(GO) build
+.PHONY: build
+
+test:
+	$(GO) test ./... -race -v
+.PHONY: test
+
+fuckit:
+	$(GO) clean --modcache && $(GIT) reset --hard HEAD && $(GIT) clean -fdx
+.PHONY: fuckit
+
+protos:
+	$(PROTOC) -I./protos --go_out=./pkg/api/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/pb --go-grpc_opt=paths=source_relative protos/api.proto
+.PHONY: protos
+
+print-%  : ; @echo $* = $($*)
+
+help:
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+.PHONY: help
