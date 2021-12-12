@@ -21,6 +21,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o haiku-api cmd/haiku-api
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder /workspace/haiku-api .
+COPY kube.config .
 USER 65532:65532
 
 ENTRYPOINT ["/haiku-api"]
