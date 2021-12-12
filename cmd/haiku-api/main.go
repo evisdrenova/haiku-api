@@ -4,8 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"net"
-
-	"google.golang.org/grpc"
 )
 
 var (
@@ -21,8 +19,7 @@ func main() {
 		return
 	}
 
-	srvr := grpc.NewServer()
-	err = registerServices(srvr, logger)
+	srvr, err := registerServices(logger)
 	if err != nil {
 		logger.Error(err, "failed to listen")
 		return
