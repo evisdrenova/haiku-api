@@ -15,7 +15,7 @@ vendor:
 .PHONY: vendor
 
 build:
-	cd cmd/healthcare && $(GO) build
+	$(GO) build -o haiku-api cmd/haiku-api/main.go
 .PHONY: build
 
 test:
