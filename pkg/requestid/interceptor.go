@@ -22,8 +22,10 @@ func UnaryServerInterceptor(opt ...Option) grpc.UnaryServerInterceptor {
 
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 		requestID := handleRequestID(ctx, opts.gen)
-		ctx = context.WithValue(ctx, reqIDKey, requestID)
-		return handler(ctx, req)
+		ctx = setIncoming(ctx, requestID)
+		res, err := handler(ctx, req)
+		setOutgoing(ctx, requestID)
+		return res, err
 	}
 }
 

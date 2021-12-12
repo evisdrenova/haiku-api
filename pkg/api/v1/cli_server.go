@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-logr/logr"
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
+	"github.com/mhelmich/haiku-api/pkg/requestid"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -50,7 +51,8 @@ type CliServer struct {
 
 // This will have to create a k8s namespace and likely more stuff.
 func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitReply, error) {
-	s.logger.Info("init namespace", "namespaceName", req.ProjectName)
+	requestID := requestid.FromContext(ctx)
+	s.logger.Info("init namespace", "namespaceName", req.ProjectName, "requestID", requestID)
 	k8sNamespace, err := s.k8sClient.CoreV1().Namespaces().Create(ctx, &corev1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: req.ProjectName,
