@@ -4,6 +4,7 @@ import (
 	"github.com/go-logr/logr"
 	v1 "github.com/mhelmich/haiku-api/pkg/api/v1"
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
+	"github.com/mhelmich/haiku-api/pkg/requestid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -31,7 +32,7 @@ func newGrpcServer() (*grpc.Server, error) {
 
 	return grpc.NewServer(
 		grpc.Creds(creds),
-	// grpc.UnaryInterceptor(xrequestid.UnaryServerInterceptor()),
-	// grpc.StreamInterceptor(xrequestid.StreamServerInterceptor()),
+		grpc.UnaryInterceptor(requestid.UnaryServerInterceptor()),
+		grpc.StreamInterceptor(requestid.StreamServerInterceptor()),
 	), nil
 }
