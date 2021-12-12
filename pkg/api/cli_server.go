@@ -4,6 +4,7 @@ import (
 	"context"
 	"io/ioutil"
 
+	"github.com/go-logr/logr"
 	"github.com/mhelmich/haiku-api/pkg/api/pb"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -23,7 +24,7 @@ func KubeConfigGetter(path string) clientcmd.KubeconfigGetter {
 	}
 }
 
-func NewCliServer(configPath string) (*CliServer, error) {
+func NewCliServer(configPath string, logger logr.Logger) (*CliServer, error) {
 	config, err := clientcmd.BuildConfigFromKubeconfigGetter("", KubeConfigGetter(configPath))
 	if err != nil {
 		return nil, err
@@ -43,10 +44,12 @@ type CliServer struct {
 	pb.UnimplementedCliServiceServer
 
 	k8sClient *kubernetes.Clientset
+	logger    logr.Logger
 }
 
 // This will have to create a k8s namespace and likely more stuff.
 func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitReply, error) {
+	s.logger.Info("init namespace %s", req.ProjectName)
 	k8sNamespace, err := s.k8sClient.CoreV1().Namespaces().Create(ctx, &corev1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: req.ProjectName,

@@ -26,9 +26,17 @@ fuckit:
 	$(GO) clean --modcache && $(GIT) reset --hard HEAD && $(GIT) clean -fdx
 .PHONY: fuckit
 
+minikube:
+	/bin/sh ./hack/setup_minikube.sh
+.PHONY: minikube
+
 protos:
 	$(PROTOC) -I./protos --go_out=./pkg/api/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/pb --go-grpc_opt=paths=source_relative protos/api.proto
 .PHONY: protos
+
+run:
+	$(GO) run cmd/haiku-api/*.go
+.PHONY: run
 
 print-%  : ; @echo $* = $($*)
 
