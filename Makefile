@@ -4,6 +4,7 @@ PROTOC=protoc
 DOCKER=docker
 
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD || echo unknown)
+IMAGE_NAME = ghcr.io/mhelmich/haiku-api:v0.1.0-$(GIT_COMMIT)
 
 default: all
 
@@ -37,6 +38,14 @@ protos:
 run:
 	$(GO) run cmd/haiku-api/*.go
 .PHONY: run
+
+docker-build:
+	$(DOCKER) build . -t $(IMAGE_NAME)
+.PHONY: docker-build
+
+docker-push:
+	$(DOCKER) push $(IMAGE_NAME)
+.PHONY: docker-push
 
 print-%  : ; @echo $* = $($*)
 
