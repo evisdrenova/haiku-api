@@ -2,14 +2,18 @@ package main
 
 import (
 	"github.com/go-logr/logr"
-	"github.com/mercari/go-grpc-interceptor/xrequestid"
 	v1 "github.com/mhelmich/haiku-api/pkg/api/v1"
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 func registerServices(logger logr.Logger) (*grpc.Server, error) {
-	srvr := newGrpcServer()
+	srvr, err := newGrpcServer()
+	if err != nil {
+		return nil, err
+	}
+
 	cliSrvr, err := v1.NewCliServer("kube.config", logger)
 	if err != nil {
 		return nil, err
@@ -19,9 +23,15 @@ func registerServices(logger logr.Logger) (*grpc.Server, error) {
 	return srvr, nil
 }
 
-func newGrpcServer() *grpc.Server {
+func newGrpcServer() (*grpc.Server, error) {
+	creds, err := credentials.NewServerTLSFromFile("keys/service.pem", "keys/service.key")
+	if err != nil {
+		return nil, err
+	}
+
 	return grpc.NewServer(
-		grpc.UnaryInterceptor(xrequestid.UnaryServerInterceptor()),
-		grpc.StreamInterceptor(xrequestid.StreamServerInterceptor()),
-	)
+		grpc.Creds(creds),
+	// grpc.UnaryInterceptor(xrequestid.UnaryServerInterceptor()),
+	// grpc.StreamInterceptor(xrequestid.StreamServerInterceptor()),
+	), nil
 }

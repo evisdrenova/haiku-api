@@ -35,8 +35,8 @@ protos:
 	$(PROTOC) -I./protos/v1 --go_out=./pkg/api/v1/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/v1/pb --go-grpc_opt=paths=source_relative protos/v1/cli.proto
 .PHONY: protos
 
-run:
-	$(GO) run cmd/haiku-api/*.go
+run: build
+	./haiku-api
 .PHONY: run
 
 docker-build:
@@ -46,6 +46,10 @@ docker-build:
 docker-push:
 	$(DOCKER) push $(IMAGE_NAME)
 .PHONY: docker-push
+
+certs:
+	/bin/sh ./hack/create_certs.sh
+.PHONY: certs
 
 print-%  : ; @echo $* = $($*)
 
