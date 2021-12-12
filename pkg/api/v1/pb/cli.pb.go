@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.17.3
-// source: api.proto
+// source: cli.proto
 
 package pb
 
@@ -36,7 +36,7 @@ type InitRequest struct {
 func (x *InitRequest) Reset() {
 	*x = InitRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[0]
+		mi := &file_cli_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -49,7 +49,7 @@ func (x *InitRequest) String() string {
 func (*InitRequest) ProtoMessage() {}
 
 func (x *InitRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[0]
+	mi := &file_cli_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,7 +62,7 @@ func (x *InitRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitRequest.ProtoReflect.Descriptor instead.
 func (*InitRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{0}
+	return file_cli_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *InitRequest) GetProjectName() string {
@@ -83,7 +83,7 @@ type InitReply struct {
 func (x *InitReply) Reset() {
 	*x = InitReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[1]
+		mi := &file_cli_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -96,7 +96,7 @@ func (x *InitReply) String() string {
 func (*InitReply) ProtoMessage() {}
 
 func (x *InitReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[1]
+	mi := &file_cli_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +109,7 @@ func (x *InitReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitReply.ProtoReflect.Descriptor instead.
 func (*InitReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{1}
+	return file_cli_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *InitReply) GetID() string {
@@ -133,7 +133,7 @@ type DeployRequest struct {
 func (x *DeployRequest) Reset() {
 	*x = DeployRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[2]
+		mi := &file_cli_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -146,7 +146,7 @@ func (x *DeployRequest) String() string {
 func (*DeployRequest) ProtoMessage() {}
 
 func (x *DeployRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[2]
+	mi := &file_cli_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -159,7 +159,7 @@ func (x *DeployRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployRequest.ProtoReflect.Descriptor instead.
 func (*DeployRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{2}
+	return file_cli_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DeployRequest) GetImageName() string {
@@ -202,7 +202,7 @@ type DeployReply struct {
 func (x *DeployReply) Reset() {
 	*x = DeployReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[3]
+		mi := &file_cli_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -215,7 +215,7 @@ func (x *DeployReply) String() string {
 func (*DeployReply) ProtoMessage() {}
 
 func (x *DeployReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[3]
+	mi := &file_cli_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +228,7 @@ func (x *DeployReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployReply.ProtoReflect.Descriptor instead.
 func (*DeployReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{3}
+	return file_cli_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *DeployReply) GetID() string {
@@ -254,7 +254,7 @@ type ListEnvRequest struct {
 func (x *ListEnvRequest) Reset() {
 	*x = ListEnvRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[4]
+		mi := &file_cli_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -267,7 +267,7 @@ func (x *ListEnvRequest) String() string {
 func (*ListEnvRequest) ProtoMessage() {}
 
 func (x *ListEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[4]
+	mi := &file_cli_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -280,7 +280,7 @@ func (x *ListEnvRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEnvRequest.ProtoReflect.Descriptor instead.
 func (*ListEnvRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{4}
+	return file_cli_proto_rawDescGZIP(), []int{4}
 }
 
 type ListEnvReply struct {
@@ -294,7 +294,7 @@ type ListEnvReply struct {
 func (x *ListEnvReply) Reset() {
 	*x = ListEnvReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[5]
+		mi := &file_cli_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -307,7 +307,7 @@ func (x *ListEnvReply) String() string {
 func (*ListEnvReply) ProtoMessage() {}
 
 func (x *ListEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[5]
+	mi := &file_cli_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -320,7 +320,7 @@ func (x *ListEnvReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEnvReply.ProtoReflect.Descriptor instead.
 func (*ListEnvReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{5}
+	return file_cli_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListEnvReply) GetList() []*ListEnvReply_KeyValue {
@@ -345,7 +345,7 @@ type SetEnvRequest struct {
 func (x *SetEnvRequest) Reset() {
 	*x = SetEnvRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[6]
+		mi := &file_cli_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -358,7 +358,7 @@ func (x *SetEnvRequest) String() string {
 func (*SetEnvRequest) ProtoMessage() {}
 
 func (x *SetEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[6]
+	mi := &file_cli_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -371,7 +371,7 @@ func (x *SetEnvRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetEnvRequest.ProtoReflect.Descriptor instead.
 func (*SetEnvRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{6}
+	return file_cli_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SetEnvRequest) GetKey() string {
@@ -420,7 +420,7 @@ type SetEnvReply struct {
 func (x *SetEnvReply) Reset() {
 	*x = SetEnvReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[7]
+		mi := &file_cli_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -433,7 +433,7 @@ func (x *SetEnvReply) String() string {
 func (*SetEnvReply) ProtoMessage() {}
 
 func (x *SetEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[7]
+	mi := &file_cli_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -446,7 +446,7 @@ func (x *SetEnvReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetEnvReply.ProtoReflect.Descriptor instead.
 func (*SetEnvReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{7}
+	return file_cli_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SetEnvReply) GetSuccess() bool {
@@ -467,7 +467,7 @@ type RemoveEnvRequest struct {
 func (x *RemoveEnvRequest) Reset() {
 	*x = RemoveEnvRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[8]
+		mi := &file_cli_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -480,7 +480,7 @@ func (x *RemoveEnvRequest) String() string {
 func (*RemoveEnvRequest) ProtoMessage() {}
 
 func (x *RemoveEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[8]
+	mi := &file_cli_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -493,7 +493,7 @@ func (x *RemoveEnvRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveEnvRequest.ProtoReflect.Descriptor instead.
 func (*RemoveEnvRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{8}
+	return file_cli_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *RemoveEnvRequest) GetKey() string {
@@ -514,7 +514,7 @@ type RemoveEnvReply struct {
 func (x *RemoveEnvReply) Reset() {
 	*x = RemoveEnvReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[9]
+		mi := &file_cli_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -527,7 +527,7 @@ func (x *RemoveEnvReply) String() string {
 func (*RemoveEnvReply) ProtoMessage() {}
 
 func (x *RemoveEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[9]
+	mi := &file_cli_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -540,7 +540,7 @@ func (x *RemoveEnvReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveEnvReply.ProtoReflect.Descriptor instead.
 func (*RemoveEnvReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{9}
+	return file_cli_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RemoveEnvReply) GetSuccess() bool {
@@ -563,7 +563,7 @@ type DockerLoginRequest struct {
 func (x *DockerLoginRequest) Reset() {
 	*x = DockerLoginRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[10]
+		mi := &file_cli_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -576,7 +576,7 @@ func (x *DockerLoginRequest) String() string {
 func (*DockerLoginRequest) ProtoMessage() {}
 
 func (x *DockerLoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[10]
+	mi := &file_cli_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -589,7 +589,7 @@ func (x *DockerLoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DockerLoginRequest.ProtoReflect.Descriptor instead.
 func (*DockerLoginRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{10}
+	return file_cli_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DockerLoginRequest) GetURL() string {
@@ -624,7 +624,7 @@ type DockerLoginReply struct {
 func (x *DockerLoginReply) Reset() {
 	*x = DockerLoginReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[11]
+		mi := &file_cli_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -637,7 +637,7 @@ func (x *DockerLoginReply) String() string {
 func (*DockerLoginReply) ProtoMessage() {}
 
 func (x *DockerLoginReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[11]
+	mi := &file_cli_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -650,7 +650,7 @@ func (x *DockerLoginReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DockerLoginReply.ProtoReflect.Descriptor instead.
 func (*DockerLoginReply) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{11}
+	return file_cli_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *DockerLoginReply) GetID() string {
@@ -672,7 +672,7 @@ type ListEnvReply_KeyValue struct {
 func (x *ListEnvReply_KeyValue) Reset() {
 	*x = ListEnvReply_KeyValue{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_proto_msgTypes[12]
+		mi := &file_cli_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -685,7 +685,7 @@ func (x *ListEnvReply_KeyValue) String() string {
 func (*ListEnvReply_KeyValue) ProtoMessage() {}
 
 func (x *ListEnvReply_KeyValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[12]
+	mi := &file_cli_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -698,7 +698,7 @@ func (x *ListEnvReply_KeyValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEnvReply_KeyValue.ProtoReflect.Descriptor instead.
 func (*ListEnvReply_KeyValue) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{5, 0}
+	return file_cli_proto_rawDescGZIP(), []int{5, 0}
 }
 
 func (x *ListEnvReply_KeyValue) GetKey() string {
@@ -715,10 +715,10 @@ func (x *ListEnvReply_KeyValue) GetValue() string {
 	return ""
 }
 
-var File_api_proto protoreflect.FileDescriptor
+var File_cli_proto protoreflect.FileDescriptor
 
-var file_api_proto_rawDesc = []byte{
-	0x0a, 0x09, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2f, 0x0a, 0x0b, 0x49,
+var file_cli_proto_rawDesc = []byte{
+	0x0a, 0x09, 0x63, 0x6c, 0x69, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2f, 0x0a, 0x0b, 0x49,
 	0x6e, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x50, 0x72,
 	0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x1b, 0x0a, 0x09,
@@ -794,19 +794,19 @@ var file_api_proto_rawDesc = []byte{
 }
 
 var (
-	file_api_proto_rawDescOnce sync.Once
-	file_api_proto_rawDescData = file_api_proto_rawDesc
+	file_cli_proto_rawDescOnce sync.Once
+	file_cli_proto_rawDescData = file_cli_proto_rawDesc
 )
 
-func file_api_proto_rawDescGZIP() []byte {
-	file_api_proto_rawDescOnce.Do(func() {
-		file_api_proto_rawDescData = protoimpl.X.CompressGZIP(file_api_proto_rawDescData)
+func file_cli_proto_rawDescGZIP() []byte {
+	file_cli_proto_rawDescOnce.Do(func() {
+		file_cli_proto_rawDescData = protoimpl.X.CompressGZIP(file_cli_proto_rawDescData)
 	})
-	return file_api_proto_rawDescData
+	return file_cli_proto_rawDescData
 }
 
-var file_api_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
-var file_api_proto_goTypes = []interface{}{
+var file_cli_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_cli_proto_goTypes = []interface{}{
 	(*InitRequest)(nil),           // 0: InitRequest
 	(*InitReply)(nil),             // 1: InitReply
 	(*DeployRequest)(nil),         // 2: DeployRequest
@@ -821,7 +821,7 @@ var file_api_proto_goTypes = []interface{}{
 	(*DockerLoginReply)(nil),      // 11: DockerLoginReply
 	(*ListEnvReply_KeyValue)(nil), // 12: ListEnvReply.KeyValue
 }
-var file_api_proto_depIdxs = []int32{
+var file_cli_proto_depIdxs = []int32{
 	12, // 0: ListEnvReply.List:type_name -> ListEnvReply.KeyValue
 	0,  // 1: CliService.Init:input_type -> InitRequest
 	2,  // 2: CliService.Deploy:input_type -> DeployRequest
@@ -842,13 +842,13 @@ var file_api_proto_depIdxs = []int32{
 	0,  // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_api_proto_init() }
-func file_api_proto_init() {
-	if File_api_proto != nil {
+func init() { file_cli_proto_init() }
+func file_cli_proto_init() {
+	if File_cli_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_api_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InitRequest); i {
 			case 0:
 				return &v.state
@@ -860,7 +860,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InitReply); i {
 			case 0:
 				return &v.state
@@ -872,7 +872,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeployRequest); i {
 			case 0:
 				return &v.state
@@ -884,7 +884,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeployReply); i {
 			case 0:
 				return &v.state
@@ -896,7 +896,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListEnvRequest); i {
 			case 0:
 				return &v.state
@@ -908,7 +908,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListEnvReply); i {
 			case 0:
 				return &v.state
@@ -920,7 +920,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SetEnvRequest); i {
 			case 0:
 				return &v.state
@@ -932,7 +932,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SetEnvReply); i {
 			case 0:
 				return &v.state
@@ -944,7 +944,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RemoveEnvRequest); i {
 			case 0:
 				return &v.state
@@ -956,7 +956,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RemoveEnvReply); i {
 			case 0:
 				return &v.state
@@ -968,7 +968,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DockerLoginRequest); i {
 			case 0:
 				return &v.state
@@ -980,7 +980,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DockerLoginReply); i {
 			case 0:
 				return &v.state
@@ -992,7 +992,7 @@ func file_api_proto_init() {
 				return nil
 			}
 		}
-		file_api_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListEnvReply_KeyValue); i {
 			case 0:
 				return &v.state
@@ -1009,18 +1009,18 @@ func file_api_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_api_proto_rawDesc,
+			RawDescriptor: file_cli_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_api_proto_goTypes,
-		DependencyIndexes: file_api_proto_depIdxs,
-		MessageInfos:      file_api_proto_msgTypes,
+		GoTypes:           file_cli_proto_goTypes,
+		DependencyIndexes: file_cli_proto_depIdxs,
+		MessageInfos:      file_cli_proto_msgTypes,
 	}.Build()
-	File_api_proto = out.File
-	file_api_proto_rawDesc = nil
-	file_api_proto_goTypes = nil
-	file_api_proto_depIdxs = nil
+	File_cli_proto = out.File
+	file_cli_proto_rawDesc = nil
+	file_cli_proto_goTypes = nil
+	file_cli_proto_depIdxs = nil
 }

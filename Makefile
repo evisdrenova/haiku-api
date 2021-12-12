@@ -15,7 +15,7 @@ vendor:
 	$(GO) mod tidy && $(GO) mod vendor
 .PHONY: vendor
 
-build:
+build: protos
 	$(GO) build -o haiku-api cmd/haiku-api/*.go
 .PHONY: build
 
@@ -32,7 +32,7 @@ minikube:
 .PHONY: minikube
 
 protos:
-	$(PROTOC) -I./protos --go_out=./pkg/api/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/pb --go-grpc_opt=paths=source_relative protos/api.proto
+	$(PROTOC) -I./protos/v1 --go_out=./pkg/api/v1/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/v1/pb --go-grpc_opt=paths=source_relative protos/v1/cli.proto
 .PHONY: protos
 
 run:
