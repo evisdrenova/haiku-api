@@ -37,6 +37,7 @@ func NewCliServer(configPath string, logger logr.Logger) (*CliServer, error) {
 
 	return &CliServer{
 		k8sClient: k8sClient,
+		logger:    logger,
 	}, nil
 }
 
@@ -49,7 +50,7 @@ type CliServer struct {
 
 // This will have to create a k8s namespace and likely more stuff.
 func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitReply, error) {
-	s.logger.Info("init namespace %s", req.ProjectName)
+	s.logger.Info("init namespace", "namespaceName", req.ProjectName)
 	k8sNamespace, err := s.k8sClient.CoreV1().Namespaces().Create(ctx, &corev1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: req.ProjectName,
