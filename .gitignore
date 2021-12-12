@@ -15,4 +15,4 @@
 vendor/
 
 kube.config
-haiku-api
+/haiku-api
