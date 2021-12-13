@@ -42,7 +42,9 @@ func StreamServerInterceptor(opt ...Option) grpc.StreamServerInterceptor {
 		requestID := handleRequestID(ctx, opts.gen)
 		ctx = context.WithValue(ctx, reqIDKey, requestID)
 		stream = newServerStreamWithContext(stream, ctx)
-		return handler(srv, stream)
+		err = handler(srv, stream)
+		setOutgoing(ctx, requestID)
+		return err
 	}
 }
 
