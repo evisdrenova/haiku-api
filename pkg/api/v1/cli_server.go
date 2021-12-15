@@ -90,6 +90,21 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 // Those are relatively simple and be pulled in from the haiku operator.
 // The main attribute of those is the image url.
 func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.DeployReply, error) {
+	requestID := requestid.FromContext(ctx)
+	s.logger.Info("deploy namespace", "namespaceName", req.ProjectName, "requestID", requestID)
+	_, err := s.k8sClient.CoreV1().Namespaces().Get(ctx, req.ProjectName, metav1.GetOptions{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Namespace",
+			APIVersion: "",
+		},
+	})
+	if err != nil {
+		// throw error saying projectName does not exist
+		return nil, err
+	}
+	// Somehow deploy to knative deployment to provided namespace
+	// If it already exists, we should update the deployment to include the new docker image/tag (if it's not current)
+	// https://knative.dev/docs/reference/api/serving-api/#serving.knative.dev%2fv1
 	return nil, nil
 }
 
