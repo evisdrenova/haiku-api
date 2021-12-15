@@ -12,6 +12,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1 "k8s.io/client-go/applyconfigurations/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -92,12 +93,7 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.DeployReply, error) {
 	requestID := requestid.FromContext(ctx)
 	s.logger.Info("deploy namespace", "namespaceName", req.ProjectName, "requestID", requestID)
-	_, err := s.k8sClient.CoreV1().Namespaces().Get(ctx, req.ProjectName, metav1.GetOptions{
-		TypeMeta: metav1.TypeMeta{
-			Kind:       "Namespace",
-			APIVersion: "",
-		},
-	})
+	_, err := s.k8sClient.CoreV1().Namespaces().Get(ctx, req.ProjectName, metav1.GetOptions{})
 	if err != nil {
 		// throw error saying projectName does not exist
 		return nil, err
@@ -105,7 +101,16 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 	// Somehow deploy to knative deployment to provided namespace
 	// If it already exists, we should update the deployment to include the new docker image/tag (if it's not current)
 	// https://knative.dev/docs/reference/api/serving-api/#serving.knative.dev%2fv1
-	return nil, nil
+	knService, err := s.k8sClient.CoreV1().Services(req.ProjectName).Apply(ctx, &v1.ServiceApplyConfiguration{}, metav1.ApplyOptions{})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.DeployReply{
+		URL: "",
+		ID:  string(knService.UID),
+	}, err
 }
 
 // The env family of endpoints maybe gets stored as a k8s configmap.
