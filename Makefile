@@ -19,7 +19,7 @@ build: protos
 	$(GO) build -o haiku-api cmd/haiku-api/*.go
 .PHONY: build
 
-test:
+test: protos
 	$(GO) test ./... -race -v
 .PHONY: test
 
@@ -35,11 +35,11 @@ protos:
 	$(PROTOC) -I./protos/v1 --go_out=./pkg/api/v1/pb --go_opt=paths=source_relative --go-grpc_out=./pkg/api/v1/pb --go-grpc_opt=paths=source_relative protos/v1/cli.proto
 .PHONY: protos
 
-run: build
-	./haiku-api
+run: protos
+	go run cmd/haiku-api/*.go
 .PHONY: run
 
-docker-build:
+docker-build: protos
 	$(DOCKER) build . -t $(IMAGE_NAME)
 .PHONY: docker-build
 
