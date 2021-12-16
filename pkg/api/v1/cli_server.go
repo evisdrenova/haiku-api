@@ -29,6 +29,8 @@ func KubeConfigGetter(path string) clientcmd.KubeconfigGetter {
 	}
 }
 
+// taken from here
+// https://www.martin-helmich.de/en/blog/kubernetes-crd-client.html
 func newRestClient(config *rest.Config) (*rest.RESTClient, error) {
 	crdConfig := *config
 	crdConfig.ContentConfig.GroupVersion = &ho.GroupVersion
