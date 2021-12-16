@@ -7,7 +7,7 @@ require (
 	github.com/go-logr/zerologr v1.2.1
 	github.com/golang/protobuf v1.5.2
 	github.com/lithammer/shortuuid/v3 v3.0.7
-	github.com/mhelmich/haiku-operator v0.0.0-20211214225724-703ece0f95da
+	github.com/mhelmich/haiku-operator v0.0.0-20211216212507-55a568259353
 	github.com/rs/zerolog v1.26.0
 	google.golang.org/grpc v1.42.0
 	google.golang.org/protobuf v1.27.1

@@ -8,12 +8,11 @@ import (
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
 	"github.com/mhelmich/haiku-api/pkg/requestid"
 	ho "github.com/mhelmich/haiku-operator/apis/entities/v1alpha1"
+	hc "github.com/mhelmich/haiku-operator/clientset"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
@@ -29,24 +28,10 @@ func KubeConfigGetter(path string) clientcmd.KubeconfigGetter {
 	}
 }
 
-// taken from here
-// https://www.martin-helmich.de/en/blog/kubernetes-crd-client.html
-func newRestClient(config *rest.Config) (*rest.RESTClient, error) {
-	crdConfig := *config
-	crdConfig.ContentConfig.GroupVersion = &ho.GroupVersion
-	crdConfig.APIPath = "/apis"
-	crdConfig.NegotiatedSerializer = serializer.NewCodecFactory(scheme.Scheme)
-	crdConfig.UserAgent = rest.DefaultKubernetesUserAgent()
-	return rest.UnversionedRESTClientFor(&crdConfig)
-}
-
 // TODO: use fancy option pattern instead of this hack
 func NewCliServer(configPath string, logger logr.Logger) (*CliServer, error) {
 	var config *rest.Config
 	var err error
-	// register our CRDs with the client
-	ho.AddToScheme(scheme.Scheme)
-
 	if configPath == "" {
 		config, err = rest.InClusterConfig()
 	} else {
@@ -61,24 +46,24 @@ func NewCliServer(configPath string, logger logr.Logger) (*CliServer, error) {
 		return nil, err
 	}
 
-	unversionedRestClient, err := newRestClient(config)
+	haikuClient, err := hc.NewForConfig(config)
 	if err != nil {
 		return nil, err
 	}
 
 	return &CliServer{
-		k8sClient:             k8sClient,
-		unversionedRestClient: unversionedRestClient,
-		logger:                logger,
+		k8sClient:   k8sClient,
+		haikuClient: haikuClient,
+		logger:      logger,
 	}, nil
 }
 
 type CliServer struct {
 	pb.UnimplementedCliServiceServer
 
-	k8sClient             *kubernetes.Clientset
-	unversionedRestClient *rest.RESTClient
-	logger                logr.Logger
+	k8sClient   *kubernetes.Clientset
+	haikuClient *hc.Clientset
+	logger      logr.Logger
 }
 
 // This will have to create a k8s namespace and likely more stuff.
@@ -139,18 +124,12 @@ func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest)
 			Email:    req.Email,
 		},
 	}
-	created := &ho.DockerLogin{}
-	err := s.unversionedRestClient.Post().
-		Resource("dockerlogins").
-		Namespace("test-api").
-		Body(dl).
-		Do(ctx).
-		Into(created)
+	dl, err := s.haikuClient.EntitiesV1alpha1().DockerLogins("test-api").Create(ctx, dl, metav1.CreateOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	return &pb.DockerLoginReply{
-		ID: string(created.UID),
+		ID: string(dl.UID),
 	}, nil
 }
