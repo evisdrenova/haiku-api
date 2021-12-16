@@ -68,18 +68,16 @@ type CliServer struct {
 
 // This will have to create a k8s namespace and likely more stuff.
 func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitReply, error) {
-	requestID := requestid.FromContext(ctx)
-	s.logger.Info("init namespace", "namespaceName", req.ProjectName, "requestID", requestID)
+	logger := s.logger.WithValues("namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
+	logger.Info("init namespace")
 	k8sNamespace, err := s.k8sClient.CoreV1().Namespaces().Create(ctx, &corev1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: req.ProjectName,
 		},
 	}, metav1.CreateOptions{})
-	if err != nil {
-		if errors.IsAlreadyExists(err) {
-			return nil, ErrAlreadyExists
-		}
-
+	if err != nil && errors.IsAlreadyExists(err) {
+		return nil, ErrAlreadyExists
+	} else if err != nil {
 		return nil, err
 	}
 
@@ -112,9 +110,13 @@ func (s *CliServer) RemoveEnv(ctx context.Context, req *pb.RemoveEnvRequest) (*p
 // This will have to create a k8s secret (and maybe patch that secret to the local service account).
 // As illustrated here: https://knative.dev/docs/serving/deploying-from-private-registry/
 func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest) (*pb.DockerLoginReply, error) {
+	// TODO: write a "getK8sNamespaceForHaikuSpaceName" function
+	namespaceName := "test-api"
+	logger := s.logger.WithValues("namespaceName", namespaceName, "requestID", requestid.FromContext(ctx))
+	logger.Info("creating docker login")
 	dl := &ho.DockerLogin{
 		ObjectMeta: metav1.ObjectMeta{
-			Namespace: "test-api",
+			Namespace: namespaceName,
 			Name:      "super-secret",
 		},
 		Spec: ho.DockerLoginSpec{
@@ -124,8 +126,10 @@ func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest)
 			Email:    req.Email,
 		},
 	}
-	dl, err := s.haikuClient.EntitiesV1alpha1().DockerLogins("test-api").Create(ctx, dl, metav1.CreateOptions{})
-	if err != nil {
+	dl, err := s.haikuClient.EntitiesV1alpha1().DockerLogins(namespaceName).Create(ctx, dl, metav1.CreateOptions{})
+	if err != nil && errors.IsAlreadyExists(err) {
+		return nil, ErrAlreadyExists
+	} else if err != nil {
 		return nil, err
 	}
 

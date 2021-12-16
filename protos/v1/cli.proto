@@ -41,6 +41,8 @@ message DockerLoginRequest {
   string Username = 2;
   string Password = 3;
   string Email = 4;
+  string Name = 5;
+  string HaikuSpaceName = 6;
 }
 message DockerLoginReply { string ID = 1; }
 
