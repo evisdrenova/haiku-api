@@ -91,8 +91,7 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 // Those are relatively simple and be pulled in from the haiku operator.
 // The main attribute of those is the image url.
 func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.DeployReply, error) {
-	requestID := requestid.FromContext(ctx)
-	s.logger.Info("deploy namespace", "namespaceName", req.ProjectName, "requestID", requestID)
+	s.logger.Info("deploy namespace", "namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
 	// _, err := s.k8sClient.CoreV1().Namespaces().Get(ctx, req.ProjectName, metav1.GetOptions{})
 	// if err != nil {
 	// 	// throw error saying projectName does not exist
@@ -105,14 +104,14 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 
 	// s.haikuClient.EntitiesV1alpha1().
 	service, err := s.haikuClient.ServingV1alpha1().Services(req.ProjectName).Create(ctx, &v1alpha1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Namespace: req.ProjectName,
+			Name:      req.ServiceName,
+		},
 		Spec: v1alpha1.ServiceSpec{
 			Image: req.Image,
 		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name: req.ServiceName,
-		},
 	}, metav1.CreateOptions{})
-
 	if err != nil {
 		return nil, err
 	}
