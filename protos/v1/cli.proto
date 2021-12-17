@@ -5,10 +5,10 @@ message InitRequest { string ProjectName = 1; }
 message InitReply { string ID = 1; }
 
 message DeployRequest {
-  string ImageName = 1;
-  string Tag = 2;
-  string Environment = 3;
-  string ProjectName = 4;
+  string Image = 1;
+  string Environment = 2;
+  string ProjectName = 3;
+  string ServiceName = 4;
 }
 message DeployReply {
   string ID = 1;
