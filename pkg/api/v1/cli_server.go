@@ -118,7 +118,7 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 	}
 
 	return &pb.DeployReply{
-		URL: "", // how do we get the URL? :D
+		URL: service.Status.URL,
 		ID:  string(service.UID),
 	}, err
 }
