@@ -2,9 +2,11 @@ package v1
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/go-logr/logr"
+	"github.com/google/uuid"
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
 	"github.com/mhelmich/haiku-api/pkg/requestid"
 	ho "github.com/mhelmich/haiku-operator/apis/entities/v1alpha1"
@@ -13,6 +15,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -77,8 +80,10 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 		},
 	}, metav1.CreateOptions{})
 	if err != nil && errors.IsAlreadyExists(err) {
+		logger.Info("environment already exists")
 		return nil, ErrAlreadyExists
 	} else if err != nil {
+		logger.Error(err, "failed to create environment")
 		return nil, err
 	}
 
@@ -91,18 +96,8 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 // Those are relatively simple and be pulled in from the haiku operator.
 // The main attribute of those is the image url.
 func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.DeployReply, error) {
-	s.logger.Info("deploy namespace", "namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
-	// _, err := s.k8sClient.CoreV1().Namespaces().Get(ctx, req.ProjectName, metav1.GetOptions{})
-	// if err != nil {
-	// 	// throw error saying projectName does not exist
-	// 	return nil, err
-	// }
-	// Somehow deploy to knative deployment to provided namespace
-	// If it already exists, we should update the deployment to include the new docker image/tag (if it's not current)
-	// https://knative.dev/docs/reference/api/serving-api/#serving.knative.dev%2fv1
-	// knService, err := s.k8sClient.CoreV1().Services(req.ProjectName).Apply(ctx, &v1.ServiceApplyConfiguration{}, metav1.ApplyOptions{})
-
-	// s.haikuClient.EntitiesV1alpha1().
+	logger := s.logger.WithValues("namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
+	logger.Info("deploy namespace")
 	service, err := s.haikuClient.ServingV1alpha1().Services(req.ProjectName).Create(ctx, &v1alpha1.Service{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: req.ProjectName,
@@ -112,14 +107,51 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 			Image: req.Image,
 		},
 	}, metav1.CreateOptions{})
+	if err != nil && errors.IsAlreadyExists(err) {
+		logger.Info("service already exists")
+		return nil, ErrAlreadyExists
+	} else if err != nil {
+		logger.Error(err, "failed to create service")
+		return nil, err
+	}
+
+	watcher, err := s.haikuClient.ServingV1alpha1().Services(req.ProjectName).Watch(ctx, metav1.ListOptions{})
 	if err != nil {
+		logger.Error(err, "failed to create watcher for service")
+		return nil, err
+	}
+
+	serviceURL, err := waitForServiceURLUpdated(ctx, watcher, logger)
+	if err != nil {
+		logger.Error(err, "failed to watch service")
 		return nil, err
 	}
 
 	return &pb.DeployReply{
-		URL: service.Status.URL,
+		URL: serviceURL,
 		ID:  string(service.UID),
-	}, err
+	}, nil
+}
+
+func waitForServiceURLUpdated(ctx context.Context, watcher watch.Interface, logger logr.Logger) (string, error) {
+	// it's safe be called multiple times
+	defer watcher.Stop()
+
+	for {
+		select {
+		case <-ctx.Done():
+			// request timed out
+			return "", fmt.Errorf("timeout")
+		case event := <-watcher.ResultChan():
+			svc, ok := event.Object.(*v1alpha1.Service)
+			if !ok {
+				logger.Error(fmt.Errorf("object was %T", event.Object), "couldn't cast event watcher object to service")
+			}
+			if svc.Status.URL != "" {
+				return svc.Status.URL, nil
+			}
+		}
+	}
 }
 
 // The env family of endpoints maybe gets stored as a k8s configmap.
@@ -141,12 +173,13 @@ func (s *CliServer) RemoveEnv(ctx context.Context, req *pb.RemoveEnvRequest) (*p
 func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest) (*pb.DockerLoginReply, error) {
 	// TODO: write a "getK8sNamespaceForHaikuSpaceName" function
 	namespaceName := "test-api"
+	secretName := fmt.Sprintf("docker-%s-%s", uuid.NewString(), req.Server)
 	logger := s.logger.WithValues("namespaceName", namespaceName, "requestID", requestid.FromContext(ctx))
-	logger.Info("creating docker login")
+	logger.Info("creating dockerlogin")
 	dl := &ho.DockerLogin{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: namespaceName,
-			Name:      "super-secret",
+			Name:      secretName,
 		},
 		Spec: ho.DockerLoginSpec{
 			Server:   req.Server,
@@ -157,8 +190,10 @@ func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest)
 	}
 	dl, err := s.haikuClient.EntitiesV1alpha1().DockerLogins(namespaceName).Create(ctx, dl, metav1.CreateOptions{})
 	if err != nil && errors.IsAlreadyExists(err) {
+		logger.Info("dockerlogin already exists")
 		return nil, ErrAlreadyExists
 	} else if err != nil {
+		logger.Error(err, "failed to create dockerlogin")
 		return nil, err
 	}
 

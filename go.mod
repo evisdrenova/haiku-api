@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/go-logr/logr v1.2.0
 	github.com/go-logr/zerologr v1.2.1
+	github.com/google/uuid v1.3.0
 	github.com/lithammer/shortuuid/v3 v3.0.7
 	github.com/mhelmich/haiku-operator v0.0.0-20211217030215-54cee7d57904
 	github.com/rs/zerolog v1.26.0
@@ -21,7 +22,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
