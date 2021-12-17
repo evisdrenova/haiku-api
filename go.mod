@@ -5,9 +5,8 @@ go 1.17
 require (
 	github.com/go-logr/logr v1.2.0
 	github.com/go-logr/zerologr v1.2.1
-	github.com/golang/protobuf v1.5.2
 	github.com/lithammer/shortuuid/v3 v3.0.7
-	github.com/mhelmich/haiku-operator v0.0.0-20211216212507-55a568259353
+	github.com/mhelmich/haiku-operator v0.0.0-20211217030215-54cee7d57904
 	github.com/rs/zerolog v1.26.0
 	google.golang.org/grpc v1.42.0
 	google.golang.org/protobuf v1.27.1
@@ -19,6 +18,7 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
