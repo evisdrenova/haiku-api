@@ -1,14 +1,13 @@
 syntax = "proto3";
 option go_package = "github.com/mhelmich/haiku-api/pkg/api/pb;pb";
 
-message InitRequest { string ProjectName = 1; }
+message InitRequest { string EnvironmentName = 1; }
 message InitReply { string ID = 1; }
 
 message DeployRequest {
   string Image = 1;
-  string Environment = 2;
-  string ProjectName = 3;
-  string ServiceName = 4;
+  string EnvironmentName = 2;
+  string ServiceName = 3;
 }
 message DeployReply {
   string ID = 1;
@@ -29,7 +28,7 @@ message SetEnvRequest {
   string Value = 2;
   string ProjectName = 3;
   string ServiceName = 4;
-  string Environment = 5;
+  string EnvironmentName = 5;
 }
 message SetEnvReply { bool Success = 2; }
 
@@ -42,7 +41,7 @@ message DockerLoginRequest {
   string Password = 3;
   string Email = 4;
   string Name = 5;
-  string HaikuSpaceName = 6;
+  string EnvironmentName = 6;
 }
 message DockerLoginReply { string ID = 1; }
 

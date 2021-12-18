@@ -72,11 +72,11 @@ type CliServer struct {
 
 // This will have to create a k8s namespace and likely more stuff.
 func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitReply, error) {
-	logger := s.logger.WithValues("namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
+	logger := s.logger.WithValues("namespaceName", req.EnvironmentName, "requestID", requestid.FromContext(ctx))
 	logger.Info("init namespace")
 	k8sNamespace, err := s.k8sClient.CoreV1().Namespaces().Create(ctx, &corev1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: req.ProjectName,
+			Name: req.EnvironmentName,
 		},
 	}, metav1.CreateOptions{})
 	if err != nil && errors.IsAlreadyExists(err) {
@@ -96,11 +96,11 @@ func (s *CliServer) Init(ctx context.Context, req *pb.InitRequest) (*pb.InitRepl
 // Those are relatively simple and be pulled in from the haiku operator.
 // The main attribute of those is the image url.
 func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.DeployReply, error) {
-	logger := s.logger.WithValues("namespaceName", req.ProjectName, "requestID", requestid.FromContext(ctx))
+	logger := s.logger.WithValues("namespaceName", req.EnvironmentName, "requestID", requestid.FromContext(ctx))
 	logger.Info("deploy namespace")
-	service, err := s.haikuClient.ServingV1alpha1().Services(req.ProjectName).Create(ctx, &v1alpha1.Service{
+	service, err := s.haikuClient.ServingV1alpha1().Services(req.EnvironmentName).Create(ctx, &v1alpha1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Namespace: req.ProjectName,
+			Namespace: req.EnvironmentName,
 			Name:      req.ServiceName,
 		},
 		Spec: v1alpha1.ServiceSpec{
@@ -115,7 +115,7 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 		return nil, err
 	}
 
-	watcher, err := s.haikuClient.ServingV1alpha1().Services(req.ProjectName).Watch(ctx, metav1.ListOptions{})
+	watcher, err := s.haikuClient.ServingV1alpha1().Services(req.EnvironmentName).Watch(ctx, metav1.ListOptions{})
 	if err != nil {
 		logger.Error(err, "failed to create watcher for service")
 		return nil, err
@@ -172,7 +172,7 @@ func (s *CliServer) RemoveEnv(ctx context.Context, req *pb.RemoveEnvRequest) (*p
 // As illustrated here: https://knative.dev/docs/serving/deploying-from-private-registry/
 func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest) (*pb.DockerLoginReply, error) {
 	// TODO: write a "getK8sNamespaceForHaikuSpaceName" function
-	namespaceName := "test-api"
+	namespaceName := req.EnvironmentName
 	secretName := fmt.Sprintf("docker-%s-%s", uuid.NewString(), req.Server)
 	logger := s.logger.WithValues("namespaceName", namespaceName, "requestID", requestid.FromContext(ctx))
 	logger.Info("creating dockerlogin")
