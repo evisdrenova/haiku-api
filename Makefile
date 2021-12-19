@@ -2,6 +2,7 @@ GO=go
 GIT=git
 PROTOC=protoc
 DOCKER=docker
+HOME_DIR = $${HOME}
 
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD || echo unknown)
 IMAGE_NAME = ghcr.io/mhelmich/haiku-api:v0.1.0-$(GIT_COMMIT)
@@ -40,7 +41,8 @@ run: protos
 .PHONY: run
 
 docker-build: protos
-	$(DOCKER) build . -t $(IMAGE_NAME)
+# mount the local ssh key to build locally 
+	$(DOCKER) build . -t $(IMAGE_NAME) --ssh default=$(HOME_DIR)/.ssh/id_rsa
 .PHONY: docker-build
 
 docker-push:
@@ -56,3 +58,5 @@ print-%  : ; @echo $* = $($*)
 help:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 .PHONY: help
+
+print-%  : ; @echo $* = $($*)

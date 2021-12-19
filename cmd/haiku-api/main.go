@@ -8,6 +8,9 @@ import (
 
 var (
 	port = flag.Int("port", 50051, "The server port")
+	// flip the default to this in order to connect to the cluster
+	// /Users/marco/.kube/config
+	kubeConfigPath = flag.String("kube-config-path", "", "(optional) the path to the kube config file to be used")
 )
 
 func main() {
@@ -19,7 +22,7 @@ func main() {
 		return
 	}
 
-	srvr, err := registerServices(logger)
+	srvr, err := registerServices(*kubeConfigPath, logger)
 	if err != nil {
 		logger.Error(err, "failed to listen")
 		return

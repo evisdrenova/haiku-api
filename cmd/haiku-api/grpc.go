@@ -9,13 +9,13 @@ import (
 	"google.golang.org/grpc/credentials"
 )
 
-func registerServices(logger logr.Logger) (*grpc.Server, error) {
+func registerServices(configPath string, logger logr.Logger) (*grpc.Server, error) {
 	srvr, err := newGrpcServer()
 	if err != nil {
 		return nil, err
 	}
 
-	cliSrvr, err := v1.NewCliServer("kube.config", logger)
+	cliSrvr, err := v1.NewCliServer(configPath, logger)
 	if err != nil {
 		return nil, err
 	}
