@@ -37,7 +37,7 @@ protos:
 .PHONY: protos
 
 run: protos
-	go run cmd/haiku-api/*.go
+	go run cmd/haiku-api/*.go --kube-config-path kube.config
 .PHONY: run
 
 docker-build: protos
