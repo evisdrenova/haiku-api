@@ -81,6 +81,12 @@ func (s *CliServer) Deploy(ctx context.Context, req *pb.DeployRequest) (*pb.Depl
 // The env family of endpoints maybe gets stored as a k8s configmap.
 // The config map needs to be created in a particular namespace and with particular labels.
 func (s *CliServer) ListEnv(ctx context.Context, req *pb.ListEnvRequest) (*pb.ListEnvReply, error) {
+
+	// requestID := rquestid.FromContext(ctx)
+	// fmt.Println("this is the requestID", requestID)
+
+
+
 	return nil, nil
 }
 

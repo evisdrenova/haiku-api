@@ -15,7 +15,11 @@ message DeployReply {
   string URL = 2;
 }
 
-message ListEnvRequest {}
+//updated listEnvRequest to ask for the EnvironmentName and ServiceName as parameters 
+message ListEnvRequest {
+  string EnvironmentName = 1;
+  string ServiceName = 2;
+}
 message ListEnvReply {
   message KeyValue {
     string Key = 1;
