@@ -17,8 +17,8 @@ message DeployReply {
 
 //updated listEnvRequest to ask for the EnvironmentName and ServiceName as parameters 
 message ListEnvRequest {
-  string Environment = 1;
-  string Service = 2;
+  string EnvironmentName = 1;
+  string ServiceName = 2;
 }
 message ListEnvReply {
   message KeyValue {
