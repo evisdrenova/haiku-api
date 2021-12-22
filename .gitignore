@@ -16,3 +16,4 @@ vendor/
 
 kube.config
 /haiku-api
+manifests/*.json

@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: kn-haiku-api
+spec:
+ template:
+  spec:
+   serviceAccountName: haiku-api
+   containers:
+    - image: ghcr.io/mhelmich/haiku-api:v0.1.0-a04075c
+      ports:
+        - name: h2c
+          containerPort: 8080
+          protocol: TCP

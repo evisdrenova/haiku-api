@@ -13,7 +13,7 @@ COPY go.sum go.sum
 # * use the mounted ssh key to download the dependencies
 RUN git config --global url."git@github.com:".insteadOf "https://github.com/"
 RUN apt-get install -y openssh-client
-RUN mkdir /root/.ssh/ && touch /root/.ssh/known_hosts && ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN mkdir /root/.ssh/ && touch /root/.ssh/known_hosts && ssh-keyscan github.com > /root/.ssh/known_hosts
 # cache deps before building and copying source so that we don't need to re-download as much
 # and so that source changes don't invalidate our downloaded layer
 RUN --mount=type=ssh go mod download

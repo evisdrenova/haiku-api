@@ -1,0 +1,14 @@
+namespace: haiku-api
+
+secretGenerator:
+- name: docker-registry
+  files:
+  - .dockerconfigjson=secret-docker-registry.json
+  type: kubernetes.io/dockerconfigjson
+
+resources:
+- role_binding.yaml
+- role.yaml
+- service_account.yaml
+- service.yaml
+- namespace.yaml
