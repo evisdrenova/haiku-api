@@ -24,6 +24,7 @@ type CliServiceClient interface {
 	SetEnv(ctx context.Context, in *SetEnvRequest, opts ...grpc.CallOption) (*SetEnvReply, error)
 	RemoveEnv(ctx context.Context, in *RemoveEnvRequest, opts ...grpc.CallOption) (*RemoveEnvReply, error)
 	DockerLogin(ctx context.Context, in *DockerLoginRequest, opts ...grpc.CallOption) (*DockerLoginReply, error)
+	Up(ctx context.Context, opts ...grpc.CallOption) (CliService_UpClient, error)
 }
 
 type cliServiceClient struct {
@@ -88,6 +89,37 @@ func (c *cliServiceClient) DockerLogin(ctx context.Context, in *DockerLoginReque
 	return out, nil
 }
 
+func (c *cliServiceClient) Up(ctx context.Context, opts ...grpc.CallOption) (CliService_UpClient, error) {
+	stream, err := c.cc.NewStream(ctx, &CliService_ServiceDesc.Streams[0], "/CliService/Up", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &cliServiceUpClient{stream}
+	return x, nil
+}
+
+type CliService_UpClient interface {
+	Send(*UpRequest) error
+	Recv() (*UpResponse, error)
+	grpc.ClientStream
+}
+
+type cliServiceUpClient struct {
+	grpc.ClientStream
+}
+
+func (x *cliServiceUpClient) Send(m *UpRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *cliServiceUpClient) Recv() (*UpResponse, error) {
+	m := new(UpResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // CliServiceServer is the server API for CliService service.
 // All implementations must embed UnimplementedCliServiceServer
 // for forward compatibility
@@ -98,6 +130,7 @@ type CliServiceServer interface {
 	SetEnv(context.Context, *SetEnvRequest) (*SetEnvReply, error)
 	RemoveEnv(context.Context, *RemoveEnvRequest) (*RemoveEnvReply, error)
 	DockerLogin(context.Context, *DockerLoginRequest) (*DockerLoginReply, error)
+	Up(CliService_UpServer) error
 	mustEmbedUnimplementedCliServiceServer()
 }
 
@@ -122,6 +155,9 @@ func (UnimplementedCliServiceServer) RemoveEnv(context.Context, *RemoveEnvReques
 }
 func (UnimplementedCliServiceServer) DockerLogin(context.Context, *DockerLoginRequest) (*DockerLoginReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DockerLogin not implemented")
+}
+func (UnimplementedCliServiceServer) Up(CliService_UpServer) error {
+	return status.Errorf(codes.Unimplemented, "method Up not implemented")
 }
 func (UnimplementedCliServiceServer) mustEmbedUnimplementedCliServiceServer() {}
 
@@ -244,6 +280,32 @@ func _CliService_DockerLogin_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CliService_Up_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(CliServiceServer).Up(&cliServiceUpServer{stream})
+}
+
+type CliService_UpServer interface {
+	Send(*UpResponse) error
+	Recv() (*UpRequest, error)
+	grpc.ServerStream
+}
+
+type cliServiceUpServer struct {
+	grpc.ServerStream
+}
+
+func (x *cliServiceUpServer) Send(m *UpResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *cliServiceUpServer) Recv() (*UpRequest, error) {
+	m := new(UpRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // CliService_ServiceDesc is the grpc.ServiceDesc for CliService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -276,6 +338,13 @@ var CliService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CliService_DockerLogin_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Up",
+			Handler:       _CliService_Up_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "cli.proto",
 }

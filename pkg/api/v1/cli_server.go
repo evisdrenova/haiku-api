@@ -3,6 +3,7 @@ package v1
 import (
 	"context"
 	"fmt"
+	"io"
 	"io/ioutil"
 
 	"github.com/go-logr/logr"
@@ -12,6 +13,7 @@ import (
 	ho "github.com/mhelmich/haiku-operator/apis/entities/v1alpha1"
 	"github.com/mhelmich/haiku-operator/apis/serving/v1alpha1"
 	hc "github.com/mhelmich/haiku-operator/clientset"
+	tekton "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -201,4 +203,60 @@ func (s *CliServer) DockerLogin(ctx context.Context, req *pb.DockerLoginRequest)
 	return &pb.DockerLoginReply{
 		ID: string(dl.UID),
 	}, nil
+}
+
+func (s *CliServer) Up(stream pb.CliService_UpServer) error {
+	logger := s.logger.WithValues("requestID", requestid.FromContext(stream.Context()))
+	req, err := stream.Recv()
+	if err != nil {
+		logger.Error(err, "first receive out of stream failed")
+		return fmt.Errorf("%s", err.Error())
+	}
+
+	md := req.GetMetaData()
+	if md == nil {
+		err = fmt.Errorf("first packet needs to be metadata")
+		logger.Error(err, "meta data couldn't be received")
+		return err
+	}
+
+	logger = s.logger.WithValues("namespaceName", md.EnvironmentName)
+	err = consumeStreamAndUploadToTektonWorkspace(stream)
+	if err != nil {
+		logger.Error(err, "consuming and uploading file failed")
+		return err
+	}
+
+	err = stream.Send(&pb.UpResponse{
+		Data: &pb.UpResponse_UploadStatus{
+			UploadStatus: pb.UploadStatus_COMPLETE,
+		},
+	})
+	if err != nil {
+		logger.Error(err, "couldn't set upload status")
+		return err
+	}
+
+	// todo: kick off tekton pipeline
+	tr := &tekton.TaskRun{}
+	logger.Info("task run", "tr", tr)
+	// todo: keep feeding updates to the client
+
+	return nil
+}
+
+func consumeStreamAndUploadToTektonWorkspace(stream pb.CliService_UpServer) error {
+	for {
+		req, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				return nil
+			}
+			return err
+		}
+
+		// todo: upload to tekton workspace
+		fmt.Printf("%d\n", req.GetData())
+	}
+	return nil
 }
