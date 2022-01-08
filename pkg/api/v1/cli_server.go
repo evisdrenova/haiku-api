@@ -2,10 +2,15 @@ package v1
 
 import (
 	"context"
+	goerrors "errors"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"os"
+	"strings"
+	"time"
 
+	storage "cloud.google.com/go/storage"
 	"github.com/go-logr/logr"
 	"github.com/google/uuid"
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
@@ -14,6 +19,7 @@ import (
 	"github.com/mhelmich/haiku-operator/apis/serving/v1alpha1"
 	hc "github.com/mhelmich/haiku-operator/clientset"
 	tekton "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
+	"google.golang.org/api/option"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -58,9 +64,15 @@ func NewCliServer(configPath string, logger logr.Logger) (*CliServer, error) {
 		return nil, err
 	}
 
+	gcsClient, err := getGcsClient(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
 	return &CliServer{
 		k8sClient:   k8sClient,
 		haikuClient: haikuClient,
+		gcsClient:   gcsClient,
 		logger:      logger,
 	}, nil
 }
@@ -70,6 +82,7 @@ type CliServer struct {
 
 	k8sClient   *kubernetes.Clientset
 	haikuClient *hc.Clientset
+	gcsClient   *storage.Client
 	logger      logr.Logger
 }
 
@@ -259,4 +272,46 @@ func consumeStreamAndUploadToTektonWorkspace(stream pb.CliService_UpServer) erro
 		fmt.Printf("%d\n", req.GetData())
 	}
 	return nil
+}
+
+func (s *CliServer) GetServiceUploadUrl(ctx context.Context, req *pb.GetServiceUploadUrlRequest) (*pb.GetServiceUploadUrlResponse, error) {
+	bucket := s.gcsClient.Bucket("haiku_service_storage") // todo: make this an environment variable
+
+	if bucket == nil {
+		return nil, goerrors.New("unable to find bucket")
+	}
+
+	signedURL, err := bucket.SignedURL(getUrlUploadKey(req.EnvironmentName, req.ServiceName), &storage.SignedURLOptions{
+		Scheme:      storage.SigningSchemeV4,
+		Method:      "PUT",
+		ContentType: "application/zip",
+		Expires:     time.Now().Add(15 * time.Minute),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.GetServiceUploadUrlResponse{
+		URL: signedURL,
+	}, nil
+}
+
+func getGcsClient(ctx context.Context) (*storage.Client, error) {
+	// The credentials can be ommitted as GOOGLE_APPLICATION_CREDENTIALS is the default, but I think it's better to be clear
+	// about how we are loading in the credentials
+	return storage.NewClient(ctx, option.WithCredentialsFile(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")))
+}
+
+// https://cloud.google.com/storage/docs/naming-objects
+var UPLOAD_KEY_REPLACER *strings.Replacer = strings.NewReplacer("/", "", "#", "", "[", "", "]", "", "?", "", "*", "")
+
+func getUrlUploadKey(environmentName string, serviceName string) string {
+	sanitizedEnvironmentName := UPLOAD_KEY_REPLACER.Replace(environmentName)
+	sanitizedServiceName := UPLOAD_KEY_REPLACER.Replace(serviceName)
+	return sanitizedEnvironmentName + "/" + sanitizedServiceName + "/" + time.Now().UTC().String() + "_" + uuid.New().String() + ".zip"
+}
+
+func DeployUrl(ctx context.Context, req *pb.DeployUrlRequest) (*pb.DeployUrlReply, error) {
+	return nil, nil
 }

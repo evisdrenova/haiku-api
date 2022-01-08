@@ -25,6 +25,8 @@ type CliServiceClient interface {
 	RemoveEnv(ctx context.Context, in *RemoveEnvRequest, opts ...grpc.CallOption) (*RemoveEnvReply, error)
 	DockerLogin(ctx context.Context, in *DockerLoginRequest, opts ...grpc.CallOption) (*DockerLoginReply, error)
 	Up(ctx context.Context, opts ...grpc.CallOption) (CliService_UpClient, error)
+	GetServiceUploadUrl(ctx context.Context, in *GetServiceUploadUrlRequest, opts ...grpc.CallOption) (*GetServiceUploadUrlResponse, error)
+	DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (*DeployUrlReply, error)
 }
 
 type cliServiceClient struct {
@@ -120,6 +122,24 @@ func (x *cliServiceUpClient) Recv() (*UpResponse, error) {
 	return m, nil
 }
 
+func (c *cliServiceClient) GetServiceUploadUrl(ctx context.Context, in *GetServiceUploadUrlRequest, opts ...grpc.CallOption) (*GetServiceUploadUrlResponse, error) {
+	out := new(GetServiceUploadUrlResponse)
+	err := c.cc.Invoke(ctx, "/CliService/GetServiceUploadUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cliServiceClient) DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (*DeployUrlReply, error) {
+	out := new(DeployUrlReply)
+	err := c.cc.Invoke(ctx, "/CliService/DeployUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CliServiceServer is the server API for CliService service.
 // All implementations must embed UnimplementedCliServiceServer
 // for forward compatibility
@@ -131,6 +151,8 @@ type CliServiceServer interface {
 	RemoveEnv(context.Context, *RemoveEnvRequest) (*RemoveEnvReply, error)
 	DockerLogin(context.Context, *DockerLoginRequest) (*DockerLoginReply, error)
 	Up(CliService_UpServer) error
+	GetServiceUploadUrl(context.Context, *GetServiceUploadUrlRequest) (*GetServiceUploadUrlResponse, error)
+	DeployUrl(context.Context, *DeployUrlRequest) (*DeployUrlReply, error)
 	mustEmbedUnimplementedCliServiceServer()
 }
 
@@ -158,6 +180,12 @@ func (UnimplementedCliServiceServer) DockerLogin(context.Context, *DockerLoginRe
 }
 func (UnimplementedCliServiceServer) Up(CliService_UpServer) error {
 	return status.Errorf(codes.Unimplemented, "method Up not implemented")
+}
+func (UnimplementedCliServiceServer) GetServiceUploadUrl(context.Context, *GetServiceUploadUrlRequest) (*GetServiceUploadUrlResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetServiceUploadUrl not implemented")
+}
+func (UnimplementedCliServiceServer) DeployUrl(context.Context, *DeployUrlRequest) (*DeployUrlReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeployUrl not implemented")
 }
 func (UnimplementedCliServiceServer) mustEmbedUnimplementedCliServiceServer() {}
 
@@ -306,6 +334,42 @@ func (x *cliServiceUpServer) Recv() (*UpRequest, error) {
 	return m, nil
 }
 
+func _CliService_GetServiceUploadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServiceUploadUrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CliServiceServer).GetServiceUploadUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CliService/GetServiceUploadUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CliServiceServer).GetServiceUploadUrl(ctx, req.(*GetServiceUploadUrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CliService_DeployUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeployUrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CliServiceServer).DeployUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CliService/DeployUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CliServiceServer).DeployUrl(ctx, req.(*DeployUrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CliService_ServiceDesc is the grpc.ServiceDesc for CliService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -336,6 +400,14 @@ var CliService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DockerLogin",
 			Handler:    _CliService_DockerLogin_Handler,
+		},
+		{
+			MethodName: "GetServiceUploadUrl",
+			Handler:    _CliService_GetServiceUploadUrl_Handler,
+		},
+		{
+			MethodName: "DeployUrl",
+			Handler:    _CliService_DeployUrl_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

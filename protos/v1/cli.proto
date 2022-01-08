@@ -72,6 +72,26 @@ message UpResponse {
   }
 }
 
+message GetServiceUploadUrlRequest {
+  string EnvironmentName = 1;
+  string ServiceName = 2;
+}
+
+message GetServiceUploadUrlResponse {
+  string URL = 1;
+}
+
+message DeployUrlRequest {
+  string EnvironmentName = 1;
+  string ServiceName = 2;
+  string URL = 3;
+}
+
+message DeployUrlReply {
+  string ID = 1;
+  string URL = 2;
+}
+
 service CliService {
   rpc Init(InitRequest) returns (InitReply) {}
   rpc Deploy(DeployRequest) returns (DeployReply) {}
@@ -80,4 +100,6 @@ service CliService {
   rpc RemoveEnv(RemoveEnvRequest) returns (RemoveEnvReply) {}
   rpc DockerLogin(DockerLoginRequest) returns (DockerLoginReply) {}
   rpc Up(stream UpRequest) returns (stream UpResponse) {}
+  rpc GetServiceUploadUrl(GetServiceUploadUrlRequest) returns (GetServiceUploadUrlResponse) {}
+  rpc DeployUrl(DeployUrlRequest) returns (DeployUrlReply) {}
 }

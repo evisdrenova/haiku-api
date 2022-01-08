@@ -17,3 +17,5 @@ vendor/
 kube.config
 /haiku-api
 manifests/*.json
+
+keys/secret-*.json
