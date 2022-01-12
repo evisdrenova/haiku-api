@@ -6,6 +6,7 @@ import (
 	"github.com/mhelmich/haiku-api/pkg/api/v1/pb"
 	"github.com/mhelmich/haiku-api/pkg/requestid"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 func registerServices(configPath string, logger logr.Logger) (*grpc.Server, error) {
@@ -24,13 +25,13 @@ func registerServices(configPath string, logger logr.Logger) (*grpc.Server, erro
 }
 
 func newGrpcServer() (*grpc.Server, error) {
-	// creds, err := credentials.NewServerTLSFromFile("keys/service.pem", "keys/service.key")
-	// if err != nil {
-	// 	return nil, err
-	// }
+	creds, err := credentials.NewServerTLSFromFile("keys/service.pem", "keys/service.key")
+	if err != nil {
+		return nil, err
+	}
 
 	return grpc.NewServer(
-		// grpc.Creds(creds),
+		grpc.Creds(creds),
 		grpc.UnaryInterceptor(requestid.UnaryServerInterceptor()),
 		grpc.StreamInterceptor(requestid.StreamServerInterceptor()),
 	), nil

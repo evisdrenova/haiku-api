@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -300,7 +300,9 @@ func (s *CliServer) GetServiceUploadUrl(ctx context.Context, req *pb.GetServiceU
 func getGcsClient(ctx context.Context) (*storage.Client, error) {
 	// The credentials can be ommitted as GOOGLE_APPLICATION_CREDENTIALS is the default, but I think it's better to be clear
 	// about how we are loading in the credentials
-	return storage.NewClient(ctx, option.WithCredentialsFile(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")))
+	// return storage.NewClient(ctx, option.WithCredentialsFile(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")))
+
+	return storage.NewClient(ctx, option.WithCredentialsFile("/Users/evisdrenova/Documents/code/Haiku/haiku-cli/lofty-tea-334923-ad7995b148b9.json"))
 }
 
 // https://cloud.google.com/storage/docs/naming-objects
@@ -309,7 +311,8 @@ var UPLOAD_KEY_REPLACER *strings.Replacer = strings.NewReplacer("/", "", "#", ""
 func getUrlUploadKey(environmentName string, serviceName string) string {
 	sanitizedEnvironmentName := UPLOAD_KEY_REPLACER.Replace(environmentName)
 	sanitizedServiceName := UPLOAD_KEY_REPLACER.Replace(serviceName)
-	return sanitizedEnvironmentName + "/" + sanitizedServiceName + "/" + time.Now().UTC().String() + "_" + uuid.New().String() + ".zip"
+	timestampUnix := strconv.FormatInt(time.Now().Unix(), 10)
+	return sanitizedEnvironmentName + "/" + sanitizedServiceName + "/" + timestampUnix + "_" + uuid.New().String() + ".zip"
 }
 
 func DeployUrl(ctx context.Context, req *pb.DeployUrlRequest) (*pb.DeployUrlReply, error) {
