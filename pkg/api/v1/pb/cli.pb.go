@@ -20,55 +20,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type UploadStatus int32
-
-const (
-	UploadStatus_FAILED      UploadStatus = 0
-	UploadStatus_COMPLETE    UploadStatus = 1
-	UploadStatus_IN_PROGRESS UploadStatus = 2
-)
-
-// Enum value maps for UploadStatus.
-var (
-	UploadStatus_name = map[int32]string{
-		0: "FAILED",
-		1: "COMPLETE",
-		2: "IN_PROGRESS",
-	}
-	UploadStatus_value = map[string]int32{
-		"FAILED":      0,
-		"COMPLETE":    1,
-		"IN_PROGRESS": 2,
-	}
-)
-
-func (x UploadStatus) Enum() *UploadStatus {
-	p := new(UploadStatus)
-	*p = x
-	return p
-}
-
-func (x UploadStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (UploadStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_cli_proto_enumTypes[0].Descriptor()
-}
-
-func (UploadStatus) Type() protoreflect.EnumType {
-	return &file_cli_proto_enumTypes[0]
-}
-
-func (x UploadStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use UploadStatus.Descriptor instead.
-func (UploadStatus) EnumDescriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{0}
-}
-
 type InitRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -163,698 +114,6 @@ func (x *InitReply) GetID() string {
 	return ""
 }
 
-type DeployRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Image           string `protobuf:"bytes,1,opt,name=Image,proto3" json:"Image,omitempty"`
-	EnvironmentName string `protobuf:"bytes,2,opt,name=EnvironmentName,proto3" json:"EnvironmentName,omitempty"`
-	ServiceName     string `protobuf:"bytes,3,opt,name=ServiceName,proto3" json:"ServiceName,omitempty"`
-}
-
-func (x *DeployRequest) Reset() {
-	*x = DeployRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DeployRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeployRequest) ProtoMessage() {}
-
-func (x *DeployRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeployRequest.ProtoReflect.Descriptor instead.
-func (*DeployRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *DeployRequest) GetImage() string {
-	if x != nil {
-		return x.Image
-	}
-	return ""
-}
-
-func (x *DeployRequest) GetEnvironmentName() string {
-	if x != nil {
-		return x.EnvironmentName
-	}
-	return ""
-}
-
-func (x *DeployRequest) GetServiceName() string {
-	if x != nil {
-		return x.ServiceName
-	}
-	return ""
-}
-
-type DeployReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ID  string `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	URL string `protobuf:"bytes,2,opt,name=URL,proto3" json:"URL,omitempty"`
-}
-
-func (x *DeployReply) Reset() {
-	*x = DeployReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DeployReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeployReply) ProtoMessage() {}
-
-func (x *DeployReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeployReply.ProtoReflect.Descriptor instead.
-func (*DeployReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *DeployReply) GetID() string {
-	if x != nil {
-		return x.ID
-	}
-	return ""
-}
-
-func (x *DeployReply) GetURL() string {
-	if x != nil {
-		return x.URL
-	}
-	return ""
-}
-
-type ListEnvRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *ListEnvRequest) Reset() {
-	*x = ListEnvRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ListEnvRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListEnvRequest) ProtoMessage() {}
-
-func (x *ListEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListEnvRequest.ProtoReflect.Descriptor instead.
-func (*ListEnvRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{4}
-}
-
-type ListEnvReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	List []*ListEnvReply_KeyValue `protobuf:"bytes,1,rep,name=List,proto3" json:"List,omitempty"`
-}
-
-func (x *ListEnvReply) Reset() {
-	*x = ListEnvReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ListEnvReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListEnvReply) ProtoMessage() {}
-
-func (x *ListEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListEnvReply.ProtoReflect.Descriptor instead.
-func (*ListEnvReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListEnvReply) GetList() []*ListEnvReply_KeyValue {
-	if x != nil {
-		return x.List
-	}
-	return nil
-}
-
-type SetEnvRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Key             string `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-	Value           string `protobuf:"bytes,2,opt,name=Value,proto3" json:"Value,omitempty"`
-	ProjectName     string `protobuf:"bytes,3,opt,name=ProjectName,proto3" json:"ProjectName,omitempty"`
-	ServiceName     string `protobuf:"bytes,4,opt,name=ServiceName,proto3" json:"ServiceName,omitempty"`
-	EnvironmentName string `protobuf:"bytes,5,opt,name=EnvironmentName,proto3" json:"EnvironmentName,omitempty"`
-}
-
-func (x *SetEnvRequest) Reset() {
-	*x = SetEnvRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SetEnvRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SetEnvRequest) ProtoMessage() {}
-
-func (x *SetEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SetEnvRequest.ProtoReflect.Descriptor instead.
-func (*SetEnvRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *SetEnvRequest) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *SetEnvRequest) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-func (x *SetEnvRequest) GetProjectName() string {
-	if x != nil {
-		return x.ProjectName
-	}
-	return ""
-}
-
-func (x *SetEnvRequest) GetServiceName() string {
-	if x != nil {
-		return x.ServiceName
-	}
-	return ""
-}
-
-func (x *SetEnvRequest) GetEnvironmentName() string {
-	if x != nil {
-		return x.EnvironmentName
-	}
-	return ""
-}
-
-type SetEnvReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Success bool `protobuf:"varint,2,opt,name=Success,proto3" json:"Success,omitempty"`
-}
-
-func (x *SetEnvReply) Reset() {
-	*x = SetEnvReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SetEnvReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SetEnvReply) ProtoMessage() {}
-
-func (x *SetEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SetEnvReply.ProtoReflect.Descriptor instead.
-func (*SetEnvReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *SetEnvReply) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-type RemoveEnvRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Key string `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-}
-
-func (x *RemoveEnvRequest) Reset() {
-	*x = RemoveEnvRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[8]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *RemoveEnvRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveEnvRequest) ProtoMessage() {}
-
-func (x *RemoveEnvRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[8]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveEnvRequest.ProtoReflect.Descriptor instead.
-func (*RemoveEnvRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *RemoveEnvRequest) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-type RemoveEnvReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Success bool `protobuf:"varint,1,opt,name=Success,proto3" json:"Success,omitempty"`
-}
-
-func (x *RemoveEnvReply) Reset() {
-	*x = RemoveEnvReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[9]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *RemoveEnvReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveEnvReply) ProtoMessage() {}
-
-func (x *RemoveEnvReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[9]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveEnvReply.ProtoReflect.Descriptor instead.
-func (*RemoveEnvReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *RemoveEnvReply) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-type DockerLoginRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Server          string `protobuf:"bytes,1,opt,name=Server,proto3" json:"Server,omitempty"`
-	Username        string `protobuf:"bytes,2,opt,name=Username,proto3" json:"Username,omitempty"`
-	Password        string `protobuf:"bytes,3,opt,name=Password,proto3" json:"Password,omitempty"`
-	Email           string `protobuf:"bytes,4,opt,name=Email,proto3" json:"Email,omitempty"`
-	Name            string `protobuf:"bytes,5,opt,name=Name,proto3" json:"Name,omitempty"`
-	EnvironmentName string `protobuf:"bytes,6,opt,name=EnvironmentName,proto3" json:"EnvironmentName,omitempty"`
-}
-
-func (x *DockerLoginRequest) Reset() {
-	*x = DockerLoginRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[10]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DockerLoginRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DockerLoginRequest) ProtoMessage() {}
-
-func (x *DockerLoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[10]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DockerLoginRequest.ProtoReflect.Descriptor instead.
-func (*DockerLoginRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *DockerLoginRequest) GetServer() string {
-	if x != nil {
-		return x.Server
-	}
-	return ""
-}
-
-func (x *DockerLoginRequest) GetUsername() string {
-	if x != nil {
-		return x.Username
-	}
-	return ""
-}
-
-func (x *DockerLoginRequest) GetPassword() string {
-	if x != nil {
-		return x.Password
-	}
-	return ""
-}
-
-func (x *DockerLoginRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
-func (x *DockerLoginRequest) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *DockerLoginRequest) GetEnvironmentName() string {
-	if x != nil {
-		return x.EnvironmentName
-	}
-	return ""
-}
-
-type DockerLoginReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ID string `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
-}
-
-func (x *DockerLoginReply) Reset() {
-	*x = DockerLoginReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[11]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DockerLoginReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DockerLoginReply) ProtoMessage() {}
-
-func (x *DockerLoginReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[11]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DockerLoginReply.ProtoReflect.Descriptor instead.
-func (*DockerLoginReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *DockerLoginReply) GetID() string {
-	if x != nil {
-		return x.ID
-	}
-	return ""
-}
-
-type MetaData struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ServiceName     string `protobuf:"bytes,1,opt,name=ServiceName,proto3" json:"ServiceName,omitempty"`
-	EnvironmentName string `protobuf:"bytes,2,opt,name=EnvironmentName,proto3" json:"EnvironmentName,omitempty"`
-}
-
-func (x *MetaData) Reset() {
-	*x = MetaData{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[12]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *MetaData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*MetaData) ProtoMessage() {}
-
-func (x *MetaData) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[12]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use MetaData.ProtoReflect.Descriptor instead.
-func (*MetaData) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *MetaData) GetServiceName() string {
-	if x != nil {
-		return x.ServiceName
-	}
-	return ""
-}
-
-func (x *MetaData) GetEnvironmentName() string {
-	if x != nil {
-		return x.EnvironmentName
-	}
-	return ""
-}
-
-type UpRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// Types that are assignable to Data:
-	//	*UpRequest_MetaData
-	//	*UpRequest_Chunk
-	Data isUpRequest_Data `protobuf_oneof:"Data"`
-}
-
-func (x *UpRequest) Reset() {
-	*x = UpRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[13]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *UpRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpRequest) ProtoMessage() {}
-
-func (x *UpRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[13]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpRequest.ProtoReflect.Descriptor instead.
-func (*UpRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{13}
-}
-
-func (m *UpRequest) GetData() isUpRequest_Data {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
-
-func (x *UpRequest) GetMetaData() *MetaData {
-	if x, ok := x.GetData().(*UpRequest_MetaData); ok {
-		return x.MetaData
-	}
-	return nil
-}
-
-func (x *UpRequest) GetChunk() []byte {
-	if x, ok := x.GetData().(*UpRequest_Chunk); ok {
-		return x.Chunk
-	}
-	return nil
-}
-
-type isUpRequest_Data interface {
-	isUpRequest_Data()
-}
-
-type UpRequest_MetaData struct {
-	MetaData *MetaData `protobuf:"bytes,1,opt,name=MetaData,proto3,oneof"`
-}
-
-type UpRequest_Chunk struct {
-	Chunk []byte `protobuf:"bytes,2,opt,name=Chunk,proto3,oneof"`
-}
-
-func (*UpRequest_MetaData) isUpRequest_Data() {}
-
-func (*UpRequest_Chunk) isUpRequest_Data() {}
-
 type DeploymentUpdate struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -866,7 +125,7 @@ type DeploymentUpdate struct {
 func (x *DeploymentUpdate) Reset() {
 	*x = DeploymentUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[14]
+		mi := &file_cli_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -879,7 +138,7 @@ func (x *DeploymentUpdate) String() string {
 func (*DeploymentUpdate) ProtoMessage() {}
 
 func (x *DeploymentUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[14]
+	mi := &file_cli_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -892,7 +151,7 @@ func (x *DeploymentUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeploymentUpdate.ProtoReflect.Descriptor instead.
 func (*DeploymentUpdate) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{14}
+	return file_cli_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DeploymentUpdate) GetMessage() string {
@@ -901,86 +160,6 @@ func (x *DeploymentUpdate) GetMessage() string {
 	}
 	return ""
 }
-
-type UpResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// Types that are assignable to Data:
-	//	*UpResponse_UploadStatus
-	//	*UpResponse_DeploymentUpdate
-	Data isUpResponse_Data `protobuf_oneof:"Data"`
-}
-
-func (x *UpResponse) Reset() {
-	*x = UpResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *UpResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpResponse) ProtoMessage() {}
-
-func (x *UpResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpResponse.ProtoReflect.Descriptor instead.
-func (*UpResponse) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{15}
-}
-
-func (m *UpResponse) GetData() isUpResponse_Data {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
-
-func (x *UpResponse) GetUploadStatus() UploadStatus {
-	if x, ok := x.GetData().(*UpResponse_UploadStatus); ok {
-		return x.UploadStatus
-	}
-	return UploadStatus_FAILED
-}
-
-func (x *UpResponse) GetDeploymentUpdate() *DeploymentUpdate {
-	if x, ok := x.GetData().(*UpResponse_DeploymentUpdate); ok {
-		return x.DeploymentUpdate
-	}
-	return nil
-}
-
-type isUpResponse_Data interface {
-	isUpResponse_Data()
-}
-
-type UpResponse_UploadStatus struct {
-	UploadStatus UploadStatus `protobuf:"varint,1,opt,name=UploadStatus,proto3,enum=UploadStatus,oneof"`
-}
-
-type UpResponse_DeploymentUpdate struct {
-	DeploymentUpdate *DeploymentUpdate `protobuf:"bytes,2,opt,name=DeploymentUpdate,proto3,oneof"`
-}
-
-func (*UpResponse_UploadStatus) isUpResponse_Data() {}
-
-func (*UpResponse_DeploymentUpdate) isUpResponse_Data() {}
 
 type GetServiceUploadUrlRequest struct {
 	state         protoimpl.MessageState
@@ -994,7 +173,7 @@ type GetServiceUploadUrlRequest struct {
 func (x *GetServiceUploadUrlRequest) Reset() {
 	*x = GetServiceUploadUrlRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[16]
+		mi := &file_cli_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1007,7 +186,7 @@ func (x *GetServiceUploadUrlRequest) String() string {
 func (*GetServiceUploadUrlRequest) ProtoMessage() {}
 
 func (x *GetServiceUploadUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[16]
+	mi := &file_cli_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1020,7 +199,7 @@ func (x *GetServiceUploadUrlRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetServiceUploadUrlRequest.ProtoReflect.Descriptor instead.
 func (*GetServiceUploadUrlRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{16}
+	return file_cli_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetServiceUploadUrlRequest) GetEnvironmentName() string {
@@ -1042,13 +221,14 @@ type GetServiceUploadUrlResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	URL string `protobuf:"bytes,1,opt,name=URL,proto3" json:"URL,omitempty"`
+	URL       string `protobuf:"bytes,1,opt,name=URL,proto3" json:"URL,omitempty"`
+	UploadKey string `protobuf:"bytes,2,opt,name=UploadKey,proto3" json:"UploadKey,omitempty"`
 }
 
 func (x *GetServiceUploadUrlResponse) Reset() {
 	*x = GetServiceUploadUrlResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[17]
+		mi := &file_cli_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1061,7 +241,7 @@ func (x *GetServiceUploadUrlResponse) String() string {
 func (*GetServiceUploadUrlResponse) ProtoMessage() {}
 
 func (x *GetServiceUploadUrlResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[17]
+	mi := &file_cli_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1074,12 +254,19 @@ func (x *GetServiceUploadUrlResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetServiceUploadUrlResponse.ProtoReflect.Descriptor instead.
 func (*GetServiceUploadUrlResponse) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{17}
+	return file_cli_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetServiceUploadUrlResponse) GetURL() string {
 	if x != nil {
 		return x.URL
+	}
+	return ""
+}
+
+func (x *GetServiceUploadUrlResponse) GetUploadKey() string {
+	if x != nil {
+		return x.UploadKey
 	}
 	return ""
 }
@@ -1097,7 +284,7 @@ type DeployUrlRequest struct {
 func (x *DeployUrlRequest) Reset() {
 	*x = DeployUrlRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[18]
+		mi := &file_cli_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1110,7 +297,7 @@ func (x *DeployUrlRequest) String() string {
 func (*DeployUrlRequest) ProtoMessage() {}
 
 func (x *DeployUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[18]
+	mi := &file_cli_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1123,7 +310,7 @@ func (x *DeployUrlRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployUrlRequest.ProtoReflect.Descriptor instead.
 func (*DeployUrlRequest) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{18}
+	return file_cli_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DeployUrlRequest) GetEnvironmentName() string {
@@ -1152,14 +339,16 @@ type DeployUrlReply struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ID  string `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	URL string `protobuf:"bytes,2,opt,name=URL,proto3" json:"URL,omitempty"`
+	// Types that are assignable to Data:
+	//	*DeployUrlReply_URL
+	//	*DeployUrlReply_DeploymentUpdate
+	Data isDeployUrlReply_Data `protobuf_oneof:"Data"`
 }
 
 func (x *DeployUrlReply) Reset() {
 	*x = DeployUrlReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[19]
+		mi := &file_cli_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1172,7 +361,7 @@ func (x *DeployUrlReply) String() string {
 func (*DeployUrlReply) ProtoMessage() {}
 
 func (x *DeployUrlReply) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[19]
+	mi := &file_cli_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1185,77 +374,45 @@ func (x *DeployUrlReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployUrlReply.ProtoReflect.Descriptor instead.
 func (*DeployUrlReply) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{19}
+	return file_cli_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *DeployUrlReply) GetID() string {
-	if x != nil {
-		return x.ID
+func (m *DeployUrlReply) GetData() isDeployUrlReply_Data {
+	if m != nil {
+		return m.Data
 	}
-	return ""
+	return nil
 }
 
 func (x *DeployUrlReply) GetURL() string {
-	if x != nil {
+	if x, ok := x.GetData().(*DeployUrlReply_URL); ok {
 		return x.URL
 	}
 	return ""
 }
 
-type ListEnvReply_KeyValue struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Key   string `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-	Value string `protobuf:"bytes,2,opt,name=Value,proto3" json:"Value,omitempty"`
-}
-
-func (x *ListEnvReply_KeyValue) Reset() {
-	*x = ListEnvReply_KeyValue{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cli_proto_msgTypes[20]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
+func (x *DeployUrlReply) GetDeploymentUpdate() *DeploymentUpdate {
+	if x, ok := x.GetData().(*DeployUrlReply_DeploymentUpdate); ok {
+		return x.DeploymentUpdate
 	}
+	return nil
 }
 
-func (x *ListEnvReply_KeyValue) String() string {
-	return protoimpl.X.MessageStringOf(x)
+type isDeployUrlReply_Data interface {
+	isDeployUrlReply_Data()
 }
 
-func (*ListEnvReply_KeyValue) ProtoMessage() {}
-
-func (x *ListEnvReply_KeyValue) ProtoReflect() protoreflect.Message {
-	mi := &file_cli_proto_msgTypes[20]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+type DeployUrlReply_URL struct {
+	URL string `protobuf:"bytes,1,opt,name=URL,proto3,oneof"`
 }
 
-// Deprecated: Use ListEnvReply_KeyValue.ProtoReflect.Descriptor instead.
-func (*ListEnvReply_KeyValue) Descriptor() ([]byte, []int) {
-	return file_cli_proto_rawDescGZIP(), []int{5, 0}
+type DeployUrlReply_DeploymentUpdate struct {
+	DeploymentUpdate *DeploymentUpdate `protobuf:"bytes,2,opt,name=DeploymentUpdate,proto3,oneof"`
 }
 
-func (x *ListEnvReply_KeyValue) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
+func (*DeployUrlReply_URL) isDeployUrlReply_Data() {}
 
-func (x *ListEnvReply_KeyValue) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
+func (*DeployUrlReply_DeploymentUpdate) isDeployUrlReply_Data() {}
 
 var File_cli_proto protoreflect.FileDescriptor
 
@@ -1266,136 +423,50 @@ var file_cli_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74,
 	0x4e, 0x61, 0x6d, 0x65, 0x22, 0x1b, 0x0a, 0x09, 0x49, 0x6e, 0x69, 0x74, 0x52, 0x65, 0x70, 0x6c,
 	0x79, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49,
-	0x44, 0x22, 0x71, 0x0a, 0x0d, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x12, 0x28, 0x0a, 0x0f, 0x45, 0x6e, 0x76, 0x69,
-	0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61,
-	0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x4e, 0x61, 0x6d, 0x65, 0x22, 0x2f, 0x0a, 0x0b, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x52, 0x65,
-	0x70, 0x6c, 0x79, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x02, 0x49, 0x44, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x52, 0x4c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x03, 0x55, 0x52, 0x4c, 0x22, 0x10, 0x0a, 0x0e, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x6e, 0x76,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x6e, 0x0a, 0x0c, 0x4c, 0x69, 0x73, 0x74, 0x45,
-	0x6e, 0x76, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2a, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x6e, 0x76, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x2e, 0x4b, 0x65, 0x79, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x04, 0x4c,
-	0x69, 0x73, 0x74, 0x1a, 0x32, 0x0a, 0x08, 0x4b, 0x65, 0x79, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12,
-	0x10, 0x0a, 0x03, 0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65,
-	0x79, 0x12, 0x14, 0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xa5, 0x01, 0x0a, 0x0d, 0x53, 0x65, 0x74, 0x45,
-	0x6e, 0x76, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x4b, 0x65, 0x79,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x56,
-	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x56, 0x61, 0x6c, 0x75,
-	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e,
-	0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61,
-	0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x28, 0x0a, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e,
-	0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f,
-	0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22,
-	0x27, 0x0a, 0x0b, 0x53, 0x65, 0x74, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x18,
-	0x0a, 0x07, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x07, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x24, 0x0a, 0x10, 0x52, 0x65, 0x6d, 0x6f,
-	0x76, 0x65, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03,
-	0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79, 0x22, 0x2a,
-	0x0a, 0x0e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x70, 0x6c, 0x79,
-	0x12, 0x18, 0x0a, 0x07, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x08, 0x52, 0x07, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0xb8, 0x01, 0x0a, 0x12, 0x44,
-	0x6f, 0x63, 0x6b, 0x65, 0x72, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x55, 0x73, 0x65,
-	0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x55, 0x73, 0x65,
-	0x72, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
-	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
-	0x64, 0x12, 0x14, 0x0a, 0x05, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x05, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x28, 0x0a, 0x0f, 0x45,
-	0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x06,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e,
-	0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x22, 0x0a, 0x10, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x4c,
-	0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x44, 0x22, 0x56, 0x0a, 0x08, 0x4d, 0x65, 0x74,
-	0x61, 0x44, 0x61, 0x74, 0x61, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x28, 0x0a, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72,
-	0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d,
-	0x65, 0x22, 0x54, 0x0a, 0x09, 0x55, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x27,
-	0x0a, 0x08, 0x4d, 0x65, 0x74, 0x61, 0x44, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x09, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x44, 0x61, 0x74, 0x61, 0x48, 0x00, 0x52, 0x08, 0x4d,
-	0x65, 0x74, 0x61, 0x44, 0x61, 0x74, 0x61, 0x12, 0x16, 0x0a, 0x05, 0x43, 0x68, 0x75, 0x6e, 0x6b,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x48, 0x00, 0x52, 0x05, 0x43, 0x68, 0x75, 0x6e, 0x6b, 0x42,
-	0x06, 0x0a, 0x04, 0x44, 0x61, 0x74, 0x61, 0x22, 0x2c, 0x0a, 0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f,
-	0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d,
-	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65,
-	0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x8a, 0x01, 0x0a, 0x0a, 0x55, 0x70, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x33, 0x0a, 0x0c, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0d, 0x2e, 0x55, 0x70, 0x6c,
-	0x6f, 0x61, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x48, 0x00, 0x52, 0x0c, 0x55, 0x70, 0x6c,
-	0x6f, 0x61, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x3f, 0x0a, 0x10, 0x44, 0x65, 0x70,
-	0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x00, 0x52, 0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79,
-	0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x44, 0x61,
-	0x74, 0x61, 0x22, 0x68, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x28, 0x0a, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e,
-	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72,
-	0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x2f, 0x0a, 0x1b,
-	0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64,
-	0x55, 0x72, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x55,
-	0x52, 0x4c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x52, 0x4c, 0x22, 0x70, 0x0a,
-	0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x28, 0x0a, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74,
-	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69,
-	0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a,
-	0x03, 0x55, 0x52, 0x4c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x52, 0x4c, 0x22,
-	0x32, 0x0a, 0x0e, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x70, 0x6c,
-	0x79, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49,
-	0x44, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x52, 0x4c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
-	0x55, 0x52, 0x4c, 0x2a, 0x39, 0x0a, 0x0c, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x00, 0x12,
-	0x0c, 0x0a, 0x08, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x01, 0x12, 0x0f, 0x0a,
-	0x0b, 0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x10, 0x02, 0x32, 0xc9,
-	0x03, 0x0a, 0x0a, 0x43, 0x6c, 0x69, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x22, 0x0a,
-	0x04, 0x49, 0x6e, 0x69, 0x74, 0x12, 0x0c, 0x2e, 0x49, 0x6e, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x49, 0x6e, 0x69, 0x74, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22,
-	0x00, 0x12, 0x28, 0x0a, 0x06, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x12, 0x0e, 0x2e, 0x44, 0x65,
-	0x70, 0x6c, 0x6f, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x44, 0x65,
-	0x70, 0x6c, 0x6f, 0x79, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x2b, 0x0a, 0x07, 0x4c,
-	0x69, 0x73, 0x74, 0x45, 0x6e, 0x76, 0x12, 0x0f, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x6e, 0x76,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x6e,
-	0x76, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x28, 0x0a, 0x06, 0x53, 0x65, 0x74, 0x45,
-	0x6e, 0x76, 0x12, 0x0e, 0x2e, 0x53, 0x65, 0x74, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x53, 0x65, 0x74, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x70, 0x6c, 0x79,
-	0x22, 0x00, 0x12, 0x31, 0x0a, 0x09, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x45, 0x6e, 0x76, 0x12,
-	0x11, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x45, 0x6e, 0x76, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x0f, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x45, 0x6e, 0x76, 0x52, 0x65,
-	0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x37, 0x0a, 0x0b, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x4c,
-	0x6f, 0x67, 0x69, 0x6e, 0x12, 0x13, 0x2e, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x4c, 0x6f, 0x67,
-	0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x44, 0x6f, 0x63, 0x6b,
-	0x65, 0x72, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x23,
-	0x0a, 0x02, 0x55, 0x70, 0x12, 0x0a, 0x2e, 0x55, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x0b, 0x2e, 0x55, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28,
-	0x01, 0x30, 0x01, 0x12, 0x52, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x12, 0x1b, 0x2e, 0x47, 0x65, 0x74,
+	0x44, 0x22, 0x2c, 0x0a, 0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22,
+	0x68, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c,
+	0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x28, 0x0a,
+	0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d,
+	0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x4d, 0x0a, 0x1b, 0x47, 0x65, 0x74,
 	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1c, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x31, 0x0a, 0x09, 0x44, 0x65, 0x70, 0x6c, 0x6f,
-	0x79, 0x55, 0x72, 0x6c, 0x12, 0x11, 0x2e, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0f, 0x2e, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79,
-	0x55, 0x72, 0x6c, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x2d, 0x5a, 0x2b, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6d, 0x68, 0x65, 0x6c, 0x6d, 0x69, 0x63,
-	0x68, 0x2f, 0x68, 0x61, 0x69, 0x6b, 0x75, 0x2d, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6b, 0x67, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x70, 0x62, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x52, 0x4c, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x52, 0x4c, 0x12, 0x1c, 0x0a, 0x09, 0x55, 0x70,
+	0x6c, 0x6f, 0x61, 0x64, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x55,
+	0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4b, 0x65, 0x79, 0x22, 0x70, 0x0a, 0x10, 0x44, 0x65, 0x70, 0x6c,
+	0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x28, 0x0a, 0x0f,
+	0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65,
+	0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x52, 0x4c, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x52, 0x4c, 0x22, 0x6d, 0x0a, 0x0e, 0x44, 0x65,
+	0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x12, 0x0a, 0x03,
+	0x55, 0x52, 0x4c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x03, 0x55, 0x52, 0x4c,
+	0x12, 0x3f, 0x0a, 0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x44, 0x65, 0x70,
+	0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x00, 0x52,
+	0x10, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x42, 0x06, 0x0a, 0x04, 0x44, 0x61, 0x74, 0x61, 0x32, 0xb9, 0x01, 0x0a, 0x0a, 0x43, 0x6c,
+	0x69, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x22, 0x0a, 0x04, 0x49, 0x6e, 0x69, 0x74,
+	0x12, 0x0c, 0x2e, 0x49, 0x6e, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a,
+	0x2e, 0x49, 0x6e, 0x69, 0x74, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x52, 0x0a, 0x13,
+	0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64,
+	0x55, 0x72, 0x6c, 0x12, 0x1b, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x1c, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x55, 0x70, 0x6c,
+	0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x12, 0x33, 0x0a, 0x09, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x12, 0x11, 0x2e,
+	0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x0f, 0x2e, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x70, 0x6c,
+	0x79, 0x22, 0x00, 0x30, 0x01, 0x42, 0x2d, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x6d, 0x68, 0x65, 0x6c, 0x6d, 0x69, 0x63, 0x68, 0x2f, 0x68, 0x61, 0x69,
+	0x6b, 0x75, 0x2d, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70,
+	0x62, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1410,60 +481,29 @@ func file_cli_proto_rawDescGZIP() []byte {
 	return file_cli_proto_rawDescData
 }
 
-var file_cli_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_cli_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_cli_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_cli_proto_goTypes = []interface{}{
-	(UploadStatus)(0),                   // 0: UploadStatus
-	(*InitRequest)(nil),                 // 1: InitRequest
-	(*InitReply)(nil),                   // 2: InitReply
-	(*DeployRequest)(nil),               // 3: DeployRequest
-	(*DeployReply)(nil),                 // 4: DeployReply
-	(*ListEnvRequest)(nil),              // 5: ListEnvRequest
-	(*ListEnvReply)(nil),                // 6: ListEnvReply
-	(*SetEnvRequest)(nil),               // 7: SetEnvRequest
-	(*SetEnvReply)(nil),                 // 8: SetEnvReply
-	(*RemoveEnvRequest)(nil),            // 9: RemoveEnvRequest
-	(*RemoveEnvReply)(nil),              // 10: RemoveEnvReply
-	(*DockerLoginRequest)(nil),          // 11: DockerLoginRequest
-	(*DockerLoginReply)(nil),            // 12: DockerLoginReply
-	(*MetaData)(nil),                    // 13: MetaData
-	(*UpRequest)(nil),                   // 14: UpRequest
-	(*DeploymentUpdate)(nil),            // 15: DeploymentUpdate
-	(*UpResponse)(nil),                  // 16: UpResponse
-	(*GetServiceUploadUrlRequest)(nil),  // 17: GetServiceUploadUrlRequest
-	(*GetServiceUploadUrlResponse)(nil), // 18: GetServiceUploadUrlResponse
-	(*DeployUrlRequest)(nil),            // 19: DeployUrlRequest
-	(*DeployUrlReply)(nil),              // 20: DeployUrlReply
-	(*ListEnvReply_KeyValue)(nil),       // 21: ListEnvReply.KeyValue
+	(*InitRequest)(nil),                 // 0: InitRequest
+	(*InitReply)(nil),                   // 1: InitReply
+	(*DeploymentUpdate)(nil),            // 2: DeploymentUpdate
+	(*GetServiceUploadUrlRequest)(nil),  // 3: GetServiceUploadUrlRequest
+	(*GetServiceUploadUrlResponse)(nil), // 4: GetServiceUploadUrlResponse
+	(*DeployUrlRequest)(nil),            // 5: DeployUrlRequest
+	(*DeployUrlReply)(nil),              // 6: DeployUrlReply
 }
 var file_cli_proto_depIdxs = []int32{
-	21, // 0: ListEnvReply.List:type_name -> ListEnvReply.KeyValue
-	13, // 1: UpRequest.MetaData:type_name -> MetaData
-	0,  // 2: UpResponse.UploadStatus:type_name -> UploadStatus
-	15, // 3: UpResponse.DeploymentUpdate:type_name -> DeploymentUpdate
-	1,  // 4: CliService.Init:input_type -> InitRequest
-	3,  // 5: CliService.Deploy:input_type -> DeployRequest
-	5,  // 6: CliService.ListEnv:input_type -> ListEnvRequest
-	7,  // 7: CliService.SetEnv:input_type -> SetEnvRequest
-	9,  // 8: CliService.RemoveEnv:input_type -> RemoveEnvRequest
-	11, // 9: CliService.DockerLogin:input_type -> DockerLoginRequest
-	14, // 10: CliService.Up:input_type -> UpRequest
-	17, // 11: CliService.GetServiceUploadUrl:input_type -> GetServiceUploadUrlRequest
-	19, // 12: CliService.DeployUrl:input_type -> DeployUrlRequest
-	2,  // 13: CliService.Init:output_type -> InitReply
-	4,  // 14: CliService.Deploy:output_type -> DeployReply
-	6,  // 15: CliService.ListEnv:output_type -> ListEnvReply
-	8,  // 16: CliService.SetEnv:output_type -> SetEnvReply
-	10, // 17: CliService.RemoveEnv:output_type -> RemoveEnvReply
-	12, // 18: CliService.DockerLogin:output_type -> DockerLoginReply
-	16, // 19: CliService.Up:output_type -> UpResponse
-	18, // 20: CliService.GetServiceUploadUrl:output_type -> GetServiceUploadUrlResponse
-	20, // 21: CliService.DeployUrl:output_type -> DeployUrlReply
-	13, // [13:22] is the sub-list for method output_type
-	4,  // [4:13] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	2, // 0: DeployUrlReply.DeploymentUpdate:type_name -> DeploymentUpdate
+	0, // 1: CliService.Init:input_type -> InitRequest
+	3, // 2: CliService.GetServiceUploadUrl:input_type -> GetServiceUploadUrlRequest
+	5, // 3: CliService.DeployUrl:input_type -> DeployUrlRequest
+	1, // 4: CliService.Init:output_type -> InitReply
+	4, // 5: CliService.GetServiceUploadUrl:output_type -> GetServiceUploadUrlResponse
+	6, // 6: CliService.DeployUrl:output_type -> DeployUrlReply
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_cli_proto_init() }
@@ -1497,150 +537,6 @@ func file_cli_proto_init() {
 			}
 		}
 		file_cli_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeployRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeployReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListEnvRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListEnvReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetEnvRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetEnvReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RemoveEnvRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RemoveEnvReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DockerLoginRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DockerLoginReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MetaData); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeploymentUpdate); i {
 			case 0:
 				return &v.state
@@ -1652,19 +548,7 @@ func file_cli_proto_init() {
 				return nil
 			}
 		}
-		file_cli_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cli_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetServiceUploadUrlRequest); i {
 			case 0:
 				return &v.state
@@ -1676,7 +560,7 @@ func file_cli_proto_init() {
 				return nil
 			}
 		}
-		file_cli_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetServiceUploadUrlResponse); i {
 			case 0:
 				return &v.state
@@ -1688,7 +572,7 @@ func file_cli_proto_init() {
 				return nil
 			}
 		}
-		file_cli_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeployUrlRequest); i {
 			case 0:
 				return &v.state
@@ -1700,7 +584,7 @@ func file_cli_proto_init() {
 				return nil
 			}
 		}
-		file_cli_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_cli_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeployUrlReply); i {
 			case 0:
 				return &v.state
@@ -1712,40 +596,23 @@ func file_cli_proto_init() {
 				return nil
 			}
 		}
-		file_cli_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListEnvReply_KeyValue); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
-	file_cli_proto_msgTypes[13].OneofWrappers = []interface{}{
-		(*UpRequest_MetaData)(nil),
-		(*UpRequest_Chunk)(nil),
-	}
-	file_cli_proto_msgTypes[15].OneofWrappers = []interface{}{
-		(*UpResponse_UploadStatus)(nil),
-		(*UpResponse_DeploymentUpdate)(nil),
+	file_cli_proto_msgTypes[6].OneofWrappers = []interface{}{
+		(*DeployUrlReply_URL)(nil),
+		(*DeployUrlReply_DeploymentUpdate)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cli_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   21,
+			NumEnums:      0,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_cli_proto_goTypes,
 		DependencyIndexes: file_cli_proto_depIdxs,
-		EnumInfos:         file_cli_proto_enumTypes,
 		MessageInfos:      file_cli_proto_msgTypes,
 	}.Build()
 	File_cli_proto = out.File

@@ -19,14 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CliServiceClient interface {
 	Init(ctx context.Context, in *InitRequest, opts ...grpc.CallOption) (*InitReply, error)
-	Deploy(ctx context.Context, in *DeployRequest, opts ...grpc.CallOption) (*DeployReply, error)
-	ListEnv(ctx context.Context, in *ListEnvRequest, opts ...grpc.CallOption) (*ListEnvReply, error)
-	SetEnv(ctx context.Context, in *SetEnvRequest, opts ...grpc.CallOption) (*SetEnvReply, error)
-	RemoveEnv(ctx context.Context, in *RemoveEnvRequest, opts ...grpc.CallOption) (*RemoveEnvReply, error)
-	DockerLogin(ctx context.Context, in *DockerLoginRequest, opts ...grpc.CallOption) (*DockerLoginReply, error)
-	Up(ctx context.Context, opts ...grpc.CallOption) (CliService_UpClient, error)
 	GetServiceUploadUrl(ctx context.Context, in *GetServiceUploadUrlRequest, opts ...grpc.CallOption) (*GetServiceUploadUrlResponse, error)
-	DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (*DeployUrlReply, error)
+	DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (CliService_DeployUrlClient, error)
 }
 
 type cliServiceClient struct {
@@ -46,82 +40,6 @@ func (c *cliServiceClient) Init(ctx context.Context, in *InitRequest, opts ...gr
 	return out, nil
 }
 
-func (c *cliServiceClient) Deploy(ctx context.Context, in *DeployRequest, opts ...grpc.CallOption) (*DeployReply, error) {
-	out := new(DeployReply)
-	err := c.cc.Invoke(ctx, "/CliService/Deploy", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cliServiceClient) ListEnv(ctx context.Context, in *ListEnvRequest, opts ...grpc.CallOption) (*ListEnvReply, error) {
-	out := new(ListEnvReply)
-	err := c.cc.Invoke(ctx, "/CliService/ListEnv", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cliServiceClient) SetEnv(ctx context.Context, in *SetEnvRequest, opts ...grpc.CallOption) (*SetEnvReply, error) {
-	out := new(SetEnvReply)
-	err := c.cc.Invoke(ctx, "/CliService/SetEnv", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cliServiceClient) RemoveEnv(ctx context.Context, in *RemoveEnvRequest, opts ...grpc.CallOption) (*RemoveEnvReply, error) {
-	out := new(RemoveEnvReply)
-	err := c.cc.Invoke(ctx, "/CliService/RemoveEnv", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cliServiceClient) DockerLogin(ctx context.Context, in *DockerLoginRequest, opts ...grpc.CallOption) (*DockerLoginReply, error) {
-	out := new(DockerLoginReply)
-	err := c.cc.Invoke(ctx, "/CliService/DockerLogin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cliServiceClient) Up(ctx context.Context, opts ...grpc.CallOption) (CliService_UpClient, error) {
-	stream, err := c.cc.NewStream(ctx, &CliService_ServiceDesc.Streams[0], "/CliService/Up", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &cliServiceUpClient{stream}
-	return x, nil
-}
-
-type CliService_UpClient interface {
-	Send(*UpRequest) error
-	Recv() (*UpResponse, error)
-	grpc.ClientStream
-}
-
-type cliServiceUpClient struct {
-	grpc.ClientStream
-}
-
-func (x *cliServiceUpClient) Send(m *UpRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *cliServiceUpClient) Recv() (*UpResponse, error) {
-	m := new(UpResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *cliServiceClient) GetServiceUploadUrl(ctx context.Context, in *GetServiceUploadUrlRequest, opts ...grpc.CallOption) (*GetServiceUploadUrlResponse, error) {
 	out := new(GetServiceUploadUrlResponse)
 	err := c.cc.Invoke(ctx, "/CliService/GetServiceUploadUrl", in, out, opts...)
@@ -131,13 +49,36 @@ func (c *cliServiceClient) GetServiceUploadUrl(ctx context.Context, in *GetServi
 	return out, nil
 }
 
-func (c *cliServiceClient) DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (*DeployUrlReply, error) {
-	out := new(DeployUrlReply)
-	err := c.cc.Invoke(ctx, "/CliService/DeployUrl", in, out, opts...)
+func (c *cliServiceClient) DeployUrl(ctx context.Context, in *DeployUrlRequest, opts ...grpc.CallOption) (CliService_DeployUrlClient, error) {
+	stream, err := c.cc.NewStream(ctx, &CliService_ServiceDesc.Streams[0], "/CliService/DeployUrl", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &cliServiceDeployUrlClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type CliService_DeployUrlClient interface {
+	Recv() (*DeployUrlReply, error)
+	grpc.ClientStream
+}
+
+type cliServiceDeployUrlClient struct {
+	grpc.ClientStream
+}
+
+func (x *cliServiceDeployUrlClient) Recv() (*DeployUrlReply, error) {
+	m := new(DeployUrlReply)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // CliServiceServer is the server API for CliService service.
@@ -145,14 +86,8 @@ func (c *cliServiceClient) DeployUrl(ctx context.Context, in *DeployUrlRequest, 
 // for forward compatibility
 type CliServiceServer interface {
 	Init(context.Context, *InitRequest) (*InitReply, error)
-	Deploy(context.Context, *DeployRequest) (*DeployReply, error)
-	ListEnv(context.Context, *ListEnvRequest) (*ListEnvReply, error)
-	SetEnv(context.Context, *SetEnvRequest) (*SetEnvReply, error)
-	RemoveEnv(context.Context, *RemoveEnvRequest) (*RemoveEnvReply, error)
-	DockerLogin(context.Context, *DockerLoginRequest) (*DockerLoginReply, error)
-	Up(CliService_UpServer) error
 	GetServiceUploadUrl(context.Context, *GetServiceUploadUrlRequest) (*GetServiceUploadUrlResponse, error)
-	DeployUrl(context.Context, *DeployUrlRequest) (*DeployUrlReply, error)
+	DeployUrl(*DeployUrlRequest, CliService_DeployUrlServer) error
 	mustEmbedUnimplementedCliServiceServer()
 }
 
@@ -163,29 +98,11 @@ type UnimplementedCliServiceServer struct {
 func (UnimplementedCliServiceServer) Init(context.Context, *InitRequest) (*InitReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Init not implemented")
 }
-func (UnimplementedCliServiceServer) Deploy(context.Context, *DeployRequest) (*DeployReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Deploy not implemented")
-}
-func (UnimplementedCliServiceServer) ListEnv(context.Context, *ListEnvRequest) (*ListEnvReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListEnv not implemented")
-}
-func (UnimplementedCliServiceServer) SetEnv(context.Context, *SetEnvRequest) (*SetEnvReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetEnv not implemented")
-}
-func (UnimplementedCliServiceServer) RemoveEnv(context.Context, *RemoveEnvRequest) (*RemoveEnvReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveEnv not implemented")
-}
-func (UnimplementedCliServiceServer) DockerLogin(context.Context, *DockerLoginRequest) (*DockerLoginReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DockerLogin not implemented")
-}
-func (UnimplementedCliServiceServer) Up(CliService_UpServer) error {
-	return status.Errorf(codes.Unimplemented, "method Up not implemented")
-}
 func (UnimplementedCliServiceServer) GetServiceUploadUrl(context.Context, *GetServiceUploadUrlRequest) (*GetServiceUploadUrlResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServiceUploadUrl not implemented")
 }
-func (UnimplementedCliServiceServer) DeployUrl(context.Context, *DeployUrlRequest) (*DeployUrlReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeployUrl not implemented")
+func (UnimplementedCliServiceServer) DeployUrl(*DeployUrlRequest, CliService_DeployUrlServer) error {
+	return status.Errorf(codes.Unimplemented, "method DeployUrl not implemented")
 }
 func (UnimplementedCliServiceServer) mustEmbedUnimplementedCliServiceServer() {}
 
@@ -218,122 +135,6 @@ func _CliService_Init_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CliService_Deploy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeployRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).Deploy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/Deploy",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).Deploy(ctx, req.(*DeployRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CliService_ListEnv_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListEnvRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).ListEnv(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/ListEnv",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).ListEnv(ctx, req.(*ListEnvRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CliService_SetEnv_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetEnvRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).SetEnv(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/SetEnv",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).SetEnv(ctx, req.(*SetEnvRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CliService_RemoveEnv_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveEnvRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).RemoveEnv(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/RemoveEnv",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).RemoveEnv(ctx, req.(*RemoveEnvRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CliService_DockerLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DockerLoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).DockerLogin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/DockerLogin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).DockerLogin(ctx, req.(*DockerLoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CliService_Up_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(CliServiceServer).Up(&cliServiceUpServer{stream})
-}
-
-type CliService_UpServer interface {
-	Send(*UpResponse) error
-	Recv() (*UpRequest, error)
-	grpc.ServerStream
-}
-
-type cliServiceUpServer struct {
-	grpc.ServerStream
-}
-
-func (x *cliServiceUpServer) Send(m *UpResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *cliServiceUpServer) Recv() (*UpRequest, error) {
-	m := new(UpRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func _CliService_GetServiceUploadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetServiceUploadUrlRequest)
 	if err := dec(in); err != nil {
@@ -352,22 +153,25 @@ func _CliService_GetServiceUploadUrl_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CliService_DeployUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeployUrlRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _CliService_DeployUrl_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(DeployUrlRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(CliServiceServer).DeployUrl(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CliService/DeployUrl",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CliServiceServer).DeployUrl(ctx, req.(*DeployUrlRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(CliServiceServer).DeployUrl(m, &cliServiceDeployUrlServer{stream})
+}
+
+type CliService_DeployUrlServer interface {
+	Send(*DeployUrlReply) error
+	grpc.ServerStream
+}
+
+type cliServiceDeployUrlServer struct {
+	grpc.ServerStream
+}
+
+func (x *cliServiceDeployUrlServer) Send(m *DeployUrlReply) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 // CliService_ServiceDesc is the grpc.ServiceDesc for CliService service.
@@ -382,40 +186,15 @@ var CliService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CliService_Init_Handler,
 		},
 		{
-			MethodName: "Deploy",
-			Handler:    _CliService_Deploy_Handler,
-		},
-		{
-			MethodName: "ListEnv",
-			Handler:    _CliService_ListEnv_Handler,
-		},
-		{
-			MethodName: "SetEnv",
-			Handler:    _CliService_SetEnv_Handler,
-		},
-		{
-			MethodName: "RemoveEnv",
-			Handler:    _CliService_RemoveEnv_Handler,
-		},
-		{
-			MethodName: "DockerLogin",
-			Handler:    _CliService_DockerLogin_Handler,
-		},
-		{
 			MethodName: "GetServiceUploadUrl",
 			Handler:    _CliService_GetServiceUploadUrl_Handler,
-		},
-		{
-			MethodName: "DeployUrl",
-			Handler:    _CliService_DeployUrl_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Up",
-			Handler:       _CliService_Up_Handler,
+			StreamName:    "DeployUrl",
+			Handler:       _CliService_DeployUrl_Handler,
 			ServerStreams: true,
-			ClientStreams: true,
 		},
 	},
 	Metadata: "cli.proto",
